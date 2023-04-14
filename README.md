@@ -3,8 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.5.
 
 Before you start:
-1. install Angular Framework
-2. go to package.json and install all the packages (There should be a Button on the bottom right with "npm install")
+
+1. Install Angular Framework
+2. Go to "package.json" and install all the packages (There should be a button on the bottom right with "npm install")
 
 How to start:
 
