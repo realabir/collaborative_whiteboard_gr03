@@ -8,14 +8,10 @@ How to start:
 2. node server.js
 3. Run Angular Server "Press the play button one the top" or open another terminal and type "ng serve"
 4. click on http://localhost:4200/
+5. To test the collaborative feature just open another tab with http://localhost:4200/
 
-5. If you can't draw, press F12 -> if there are red "CORS - Errors" in the console, then download this Extension for Chrome: https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=en-US
-
-More infos about CORS: https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
-
-6. To test the collaborative feature just open another tab with http://localhost:4200/
-
-
+6. If you can't see the other user drawing, press F12 -> If there are red "CORS"- Errors in the console, then download this Extension for Chrome: https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=en-US
+7. More infos about CORS: https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
 
 INFO:
 ## Development server
