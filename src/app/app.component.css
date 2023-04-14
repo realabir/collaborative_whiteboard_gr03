@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  border: 1px solid #ccc;
+}
+
+.controls {
+  display: flex;
+  margin-top: 10px;
+}
+
+.color-picker,
+.line-width-picker,
+.clear-button {
+  margin-right: 20px;
+}
+
+.color-picker span,
+.line-width-picker span {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.line-width {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.clear-button button {
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.clear-button button:hover {
+  background-color: #aaa;
+}

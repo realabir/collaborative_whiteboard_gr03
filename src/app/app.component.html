@@ -1,0 +1,21 @@
+<div class="container">
+  <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
+  <div class="controls">
+    <div class="color-picker">
+      <span>Select color:</span>
+      <button class="color" style="background-color: black" (click)="setColor('#000000')"></button>
+      <button class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
+      <button class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
+      <button class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
+    </div>
+    <div class="line-width-picker">
+      <span>Select line width:</span>
+      <button class="line-width" (click)="setLineWidth(5)">5</button>
+      <button class="line-width" (click)="setLineWidth(10)">10</button>
+      <button class="line-width" (click)="setLineWidth(20)">20</button>
+    </div>
+    <div class="clear-button">
+      <button (click)="clear()">Clear</button>
+    </div>
+  </div>
+</div>
