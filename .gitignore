@@ -42,4 +42,3 @@ testem.log
 Thumbs.db
 
 # Project exclude paths
-/src/server/server.js
