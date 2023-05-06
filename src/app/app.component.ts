@@ -20,6 +20,13 @@ export class AppComponent implements OnInit, OnDestroy {
   private lastX = 0;
   private lastY = 0;
 
+  private textInput = document.createElement('input');
+  private text = '';
+  private textX = 0;
+  private textY = 0;
+  private textEditing = false;
+
+
   constructor() { }
 
   ngOnInit() {
@@ -38,6 +45,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.on('draw', (data) => {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
     });
+
+    this.socket.on('text', (data) => {
+      this.drawText(data.text, data.x, data.y);
+    });
+
+    this.canvas.nativeElement.addEventListener('dblclick', (event) => this.onDoubleClick(event));
+    document.addEventListener('mousedown', (event) => this.onMouseDownText(event));
+    document.addEventListener('mousemove', (event) => this.onMouseMoveText(event));
+    document.addEventListener('keydown', (event) => this.onKeyDown(event));
+    document.addEventListener('mouseup', (event) => this.onMouseUp(event));
 
     this.socket.on('clear', () => {
       this.clearCanvas();
@@ -115,4 +132,100 @@ export class AppComponent implements OnInit, OnDestroy {
     this.clearCanvas();
     this.socket.emit('clear');
   }
+
+  onDoubleClick(event: MouseEvent) {
+    if (!this.textEditing) {
+      const rect = this.canvas.nativeElement.getBoundingClientRect();
+      this.textX = event.clientX - rect.left;
+      this.textY = event.clientY - rect.top;
+      this.textInput.style.position = 'absolute';
+      this.textInput.style.left = event.clientX + 'px';
+      this.textInput.style.top = event.clientY + 'px';
+      this.textInput.style.fontSize = (this.lineWidth * 2 * 2) + 'px'
+      this.textInput.style.border = 'none';
+      this.textInput.style.padding = '0';
+      this.textInput.style.margin = '0';
+      this.textInput.style.background = 'none';
+      this.textInput.style.color = this.color;
+      this.textInput.style.fontFamily = 'Arial';
+      this.textInput.style.fontWeight = 'bold';
+      this.textInput.style.transformOrigin = '0 0';
+      this.textInput.style.transform = 'scale(' + (1 / this.context.getTransform().a) + ')';
+      this.textInput.style.zIndex = '10';
+      this.textInput.value = '';
+      this.text = '';
+
+      document.body.appendChild(this.textInput);
+      this.textInput.focus();
+      this.textEditing = true;
+      this.textInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          this.text = this.textInput.value;
+          document.body.removeChild(this.textInput);
+          this.textEditing = false;
+          this.drawText(this.text, this.textX, this.textY);
+          this.socket.emit('text', { text: this.text, x: this.textX, y: this.textY });
+        }
+      });
+    }
+  }
+
+  drawText(text: string, x: number, y: number) {
+    this.context.fillStyle = this.color;
+    this.context.font = `${this.lineWidth * 2}px Arial`;
+    this.context.fillText(text, x, y);
+  }
+
+  onMouseDownText(event: MouseEvent) {
+    if (this.textEditing && event.target !== this.textInput) {
+      this.finishTextEditing();
+    }
+  }
+
+  onMouseMoveText(event: MouseEvent) {
+    if (this.textEditing) {
+      const rect = this.canvas.nativeElement.getBoundingClientRect();
+      this.textInput.style.left = event.clientX + 'px';
+      this.textInput.style.top = event.clientY + 'px';
+      this.textX = event.clientX - rect.left;
+      this.textY = event.clientY - rect.top;
+    }
+  }
+
+  onKeyDown(event: KeyboardEvent) {
+    if (this.textEditing) {
+      if (event.key === 'Enter') {
+        this.finishTextEditing();
+        this.socket.emit('text', {
+          text: this.text,
+          x: this.textX,
+          y: this.textY,
+          color: this.color,
+          fontSize: this.lineWidth * 2 * 2
+        });
+      } else {
+        this.text = this.textInput.value;
+      }
+      if (event.key === 'Escape') {
+        this.cancelTextEditing();
+      }
+    }
+  }
+
+
+  private finishTextEditing() {
+    this.text = this.textInput.value;
+    document.body.removeChild(this.textInput);
+    this.context.font = `${this.lineWidth * 2}px Arial`;
+    this.context.fillStyle = this.color;
+    this.context.fillText(this.text, this.textX, this.textY);
+    this.textEditing = false;
+  }
+
+  cancelTextEditing() {
+    this.textInput.remove();
+    this.textEditing = false;
+    this.text = '';
+  }
+
 }

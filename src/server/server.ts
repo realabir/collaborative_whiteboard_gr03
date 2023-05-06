@@ -24,6 +24,10 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('user-connected', userName);
   });
 
+  socket.on('text', (data) => {
+    socket.broadcast.emit('text', data);
+  });
+
   socket.on('draw', (data) => {
     socket.broadcast.emit('draw', data);
   });

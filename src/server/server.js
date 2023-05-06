@@ -19,6 +19,9 @@ io.on('connection', function (socket) {
         users[socket.id] = userName;
         socket.broadcast.emit('user-connected', userName);
     });
+    socket.on('text', function (data) {
+        socket.broadcast.emit('text', data);
+    });
     socket.on('draw', function (data) {
         socket.broadcast.emit('draw', data);
     });
