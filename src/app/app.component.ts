@@ -46,8 +46,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
     });
 
+
     this.socket.on('text', (data) => {
-      this.drawText(data.text, data.x, data.y);
+      this.context.font = `${data.fontSize}px Arial`;
+      this.context.fillStyle = data.color;
+      this.context.fillText(data.text, data.x, data.y);
     });
 
     this.canvas.nativeElement.addEventListener('dblclick', (event) => this.onDoubleClick(event));
@@ -170,11 +173,20 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+
   drawText(text: string, x: number, y: number) {
+    this.context.font = `${this.lineWidth * 2 * 2}px Arial`;
     this.context.fillStyle = this.color;
-    this.context.font = `${this.lineWidth * 2}px Arial`;
     this.context.fillText(text, x, y);
+    this.socket.emit('text', {
+      text: text,
+      x: x,
+      y: y,
+      color: this.color,
+      fontSize: this.lineWidth * 2 * 2
+    });
   }
+
 
   onMouseDownText(event: MouseEvent) {
     if (this.textEditing && event.target !== this.textInput) {
@@ -227,5 +239,4 @@ export class AppComponent implements OnInit, OnDestroy {
     this.textEditing = false;
     this.text = '';
   }
-
 }
