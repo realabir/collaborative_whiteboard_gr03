@@ -21,10 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
   private lastY = 0;
 
   private textInput = document.createElement('input');
-  private text = '';
+  public text = '';
   private textX = 0;
   private textY = 0;
   private textEditing = false;
+
+  messages: { user: string, text: string }[] = [];
 
 
   constructor() { }
@@ -46,6 +48,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
     });
 
+    this.socket.on('chat-message', (message: { user: string, text: string }) => {
+      this.messages.push(message);
+    });
 
     this.socket.on('text', (data) => {
       this.context.font = `${data.fontSize}px Arial`;
@@ -71,6 +76,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.socket.disconnect();
+  }
+
+  sendMessage() {
+    if (this.text.trim().length > 0) {
+      this.socket.emit('chat-message', this.text);
+    }
   }
 
   onMouseDown(event: MouseEvent) {

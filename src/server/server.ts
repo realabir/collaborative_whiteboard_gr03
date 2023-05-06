@@ -32,6 +32,14 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('draw', data);
   });
 
+  socket.on('chat-message', (data) => {
+    const message = {
+      user: users[socket.id],
+      text: data
+    };
+    io.emit('chat-message', message);
+  });
+
   socket.on('clear', () => {
     socket.broadcast.emit('clear');
   });

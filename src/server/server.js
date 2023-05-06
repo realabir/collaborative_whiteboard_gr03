@@ -25,6 +25,13 @@ io.on('connection', function (socket) {
     socket.on('draw', function (data) {
         socket.broadcast.emit('draw', data);
     });
+    socket.on('chat-message', function (data) {
+        var message = {
+            user: users[socket.id],
+            text: data
+        };
+        io.emit('chat-message', message);
+    });
     socket.on('clear', function () {
         socket.broadcast.emit('clear');
     });

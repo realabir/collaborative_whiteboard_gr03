@@ -55,3 +55,27 @@ canvas {
 .clear-button button:hover {
   background-color: #aaa;
 }
+
+#chat {
+  position: absolute;
+  bottom: 10px; /* change the top property to bottom /
+left: calc(50% - 150px); / center the chat horizontally */
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+  z-index: 1;
+}
+#chat #messages {
+  height: 200px;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+#chat input[type="text"] {
+  width: calc(100% - 60px);
+  margin-right: 10px;
+}
+#chat button {
+  width: 50px;
+}
+

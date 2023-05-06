@@ -18,4 +18,13 @@
       <button (click)="clear()">Clear</button>
     </div>
   </div>
+  <div id="chat">
+    <div id="messages">
+      <div *ngFor="let message of messages">
+        <strong>{{ message.user }}:</strong> {{ message.text }}
+      </div>
+    </div>
+    <input type="text" [(ngModel)]="text" placeholder="Type your message...">
+    <button id="send" (click)="sendMessage()">Send</button>
+  </div>
 </div>
