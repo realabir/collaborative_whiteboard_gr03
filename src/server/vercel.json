@@ -12,5 +12,11 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/socket.io/(.*)",
+      "destination": "/socket.io/$1"
+    }
   ]
 }
