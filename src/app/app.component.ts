@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
-    this.socket = io('https://cwhiteboardgr03.netlify.app');
+    this.socket = io('http://localhost:3000');
 
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);
