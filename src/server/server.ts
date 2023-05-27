@@ -8,8 +8,7 @@ const io = new Server(server, {
   cors: {
     origin: [
       'http://localhost:4200',
-      'https://collaborative-whiteboard-gr03.vercel.app',
-      'https://collaborative-whiteboard-gr03-7vrlxw0if-realabir.vercel.app'
+      'https://cwhiteboardgr03.netlify.app',
     ],
   },
 });
