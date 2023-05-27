@@ -24,7 +24,7 @@
         <strong>{{ message.user }}:</strong> {{ message.text }}
       </div>
     </div>
-    <input type="text" [(ngModel)]="text" placeholder="Type your message...">
+    <input type="text" [(ngModel)]="text" placeholder="Type your message..." (keydown.enter)="sendMessage()">
     <button id="send" (click)="sendMessage()">Send</button>
   </div>
 </div>

@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
+    //this.socket = io('http://localhost:3000');
     this.socket = io('https://collaborative-whiteboard-gr03.vercel.app');
 
     this.socket.on('user-id', (userId: string) => {
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   sendMessage() {
     if (this.text.trim().length > 0) {
       this.socket.emit('chat-message', this.text);
+      this.text = '';
     }
   }
 
