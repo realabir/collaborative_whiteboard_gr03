@@ -6,8 +6,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:4200',
-  },
+    origin: 'https://collaborative-whiteboard-gr03.vercel.app',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['my-custom-header'],
+    credentials: true
+  }
 });
 
 const PORT = process.env['PORT'] || 3000;
