@@ -1,8 +1,12 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "http://localhost:3000/$1"
+      "source": "/api/(.*)",
+      "destination": "http://localhost:3000/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "http://localhost:4200/$1"
     }
   ]
 }
