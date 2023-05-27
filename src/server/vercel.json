@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "http://localhost:3000/socket.io/$1",
+      "headers": {
+        "Upgrade": "websocket"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
