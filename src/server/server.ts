@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://collaborative-whiteboard-gr03.vercel.app',
+    origin: 'http://localhost:4200',
   },
 });
 

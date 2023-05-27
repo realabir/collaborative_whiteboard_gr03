@@ -7,7 +7,7 @@ var app = express();
 var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
-        origin: 'https://collaborative-whiteboard-gr03.vercel.app',
+        origin: 'http://localhost:4200',
     },
 });
 var PORT = process.env['PORT'] || 3000;
