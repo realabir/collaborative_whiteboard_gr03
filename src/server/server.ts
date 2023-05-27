@@ -1,17 +1,17 @@
 import * as express from 'express';
 import * as http from 'http';
 import { Server } from 'socket.io';
+import * as cors from 'cors';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:4200',
+  },
+});
 
 const PORT = process.env['PORT'] || 3000;
-
-app.use((_req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-});
 
 let users: { [key: string]: string } = {};
 
@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
   socket.on('chat-message', (data) => {
     const message = {
       user: users[socket.id],
-      text: data
+      text: data,
     };
     io.emit('chat-message', message);
   });
