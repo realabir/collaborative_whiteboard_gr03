@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your App</title>
+  <!-- Füge den Skript-Tag hier ein -->
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+</head>
+<body>
 <div class="container">
   <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
   <div class="controls">
@@ -28,3 +37,5 @@
     <button id="send" (click)="sendMessage()">Send</button>
   </div>
 </div>
+</body>
+</html>
