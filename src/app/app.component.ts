@@ -35,8 +35,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
-    //this.socket = io('http://localhost:3000');
-    this.socket = io('https://master.d3fa4a1rhuyhfi.amplifyapp.com/');
+    this.socket = io('http://localhost:3000');
+
 
 
     this.socket.on('user-id', (userId: string) => {

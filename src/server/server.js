@@ -7,19 +7,9 @@ var app = express();
 var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
-        origin: function (origin, callback) {
-            // Überprüfe hier, ob der origin gültig ist (z.B. ob er zu deiner Web-App gehört)
-            var allowedOrigins = [
-                'http://localhost:4200',
-                'https://master.d3fa4a1rhuyhfi.amplifyapp.com'
-            ];
-            if (origin && allowedOrigins.includes(origin)) {
-                callback(null, true);
-            }
-            else {
-                callback(new Error('Origin not allowed'));
-            }
-        },
+        origin: [
+            'http://localhost:4200'
+        ],
     },
 });
 var PORT = process.env['PORT'] || 3000;
