@@ -8,7 +8,10 @@ var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
         origin: [
-            'http://localhost:4200',
+          'http://localhost:4200',
+          'collaborative-whiteboard-gr03.vercel.app',
+          'https://collaborative-whiteboard-gr03-git-master-realabir.vercel.app',
+          'collaborative-whiteboard-gr03-omfefhhl9-realabir.vercel.app'
         ],
     },
 });
