@@ -6,10 +6,18 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [
-      'http://localhost:4200',
-      'https://master.d3fa4a1rhuyhfi.amplifyapp.com/'
-    ],
+    origin: (origin, callback) => {
+      // Überprüfe hier, ob der origin gültig ist (z.B. ob er zu deiner Web-App gehört)
+      const allowedOrigins = [
+        'http://localhost:4200',
+        'https://master.d3fa4a1rhuyhfi.amplifyapp.com'
+      ];
+      if (origin && allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Origin not allowed'));
+      }
+    },
   },
 });
 
