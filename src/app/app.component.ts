@@ -1,5 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { Realtime } from 'ably';
+
+const ably = new Realtime({ key: 'Q-6dRg.E1HCQA:qMU01Uzx5QY8JfQ0eeqNmBEnWX-S3EPbt-p3zzIoWU0' });
+const ablyChannel = ably.channels.get('Collaborative Whiteboard');
+ablyChannel.attach();
 
 @Component({
   selector: 'app-root',
@@ -47,16 +52,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('draw', (data) => {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
+      ablyChannel.publish('draw', data);
     });
 
     this.socket.on('chat-message', (message: { user: string, text: string }) => {
       this.messages.push(message);
+      ablyChannel.publish('chat-message', message);
     });
 
     this.socket.on('text', (data) => {
       this.context.font = `${data.fontSize}px Arial`;
       this.context.fillStyle = data.color;
       this.context.fillText(data.text, data.x, data.y);
+      ablyChannel.publish('text', data);
     });
 
     this.canvas.nativeElement.addEventListener('dblclick', (event) => this.onDoubleClick(event));
@@ -67,6 +75,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('clear', () => {
       this.clearCanvas();
+      ablyChannel.publish('clear');
     });
 
     this.socket.on('user-disconnected', (userName: string) => {
