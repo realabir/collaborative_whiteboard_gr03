@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
     //this.socket = io('http://localhost:3000');
-    this.socket = io('collaborative-whiteboard-gr03.vercel.app');
+    this.socket = io('https://collaborative-whiteboard-gr03-git-master-realabir.vercel.app');
 
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);

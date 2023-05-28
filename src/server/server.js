@@ -3,20 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var http = require("http");
 var socket_io_1 = require("socket.io");
+var ably_1 = require("ably");
 var app = express();
 var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
         origin: [
-          'http://localhost:4200',
-          'collaborative-whiteboard-gr03.vercel.app',
-          'https://collaborative-whiteboard-gr03-git-master-realabir.vercel.app',
-          'collaborative-whiteboard-gr03-omfefhhl9-realabir.vercel.app'
+            'http://localhost:4200',
+            'collaborative-whiteboard-gr03.vercel.app',
+            'https://collaborative-whiteboard-gr03-git-master-realabir.vercel.app',
+            'collaborative-whiteboard-gr03-omfefhhl9-realabir.vercel.app'
         ],
     },
 });
 var PORT = process.env['PORT'] || 3000;
 var users = {};
+// Ably configuration
+var ably = new ably_1.Realtime({ key: 'Q-6dRg.E1HCQA:qMU01Uzx5QY8JfQ0eeqNmBEnWX-S3EPbt-p3zzIoWU0' });
+var ablyChannel = ably.channels.get('Collaborative Whiteboard');
+ablyChannel.attach();
 io.on('connection', function (socket) {
     console.log("New user connected: ".concat(socket.id));
     socket.emit('user-id', socket.id);
@@ -26,9 +31,11 @@ io.on('connection', function (socket) {
     });
     socket.on('text', function (data) {
         socket.broadcast.emit('text', data);
+        ablyChannel.publish('text', data);
     });
     socket.on('draw', function (data) {
         socket.broadcast.emit('draw', data);
+        ablyChannel.publish('draw', data);
     });
     socket.on('chat-message', function (data) {
         var message = {
@@ -36,9 +43,11 @@ io.on('connection', function (socket) {
             text: data,
         };
         io.emit('chat-message', message);
+        ablyChannel.publish('chat-message', data);
     });
     socket.on('clear', function () {
         socket.broadcast.emit('clear');
+        ablyChannel.publish('clear');
     });
     socket.on('disconnect', function () {
         console.log("User disconnected: ".concat(socket.id));
