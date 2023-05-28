@@ -8,7 +8,8 @@ var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
         origin: [
-            'http://localhost:4200'
+            'http://localhost:4200',
+            'https://master.d3fa4a1rhuyhfi.amplifyapp.com/'
         ],
     },
 });

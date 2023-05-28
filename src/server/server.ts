@@ -7,7 +7,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: [
-      'http://localhost:4200'
+      'http://localhost:4200',
+      'https://master.d3fa4a1rhuyhfi.amplifyapp.com/'
     ],
   },
 });
