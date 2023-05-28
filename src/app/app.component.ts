@@ -44,10 +44,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);
       this.socket.emit('new-user', prompt('Please enter your name:'));
+      ablyChannel.publish('user-id', userId);
     });
 
     this.socket.on('user-connected', (userName: string) => {
       console.log(`${userName} connected`);
+      ablyChannel.publish('user-connected', userName);
     });
 
     this.socket.on('draw', (data) => {
