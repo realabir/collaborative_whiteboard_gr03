@@ -9,7 +9,7 @@ var io = new socket_io_1.Server(server, {
     cors: {
         origin: [
             'http://localhost:4200',
-          'https://collaborative-whiteboard-gr03.vercel.app'
+          'https://collaborative-whiteboard-gr3.herokuapp.com'
         ],
     },
 });

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 
 @Component({
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
     //this.socket = io('http://localhost:3000');
-    this.socket = io('https://collaborative-whiteboard-gr03.vercel.app/');
+    this.socket = io('https://collaborative-whiteboard-gr3.herokuapp.com');
 
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);
