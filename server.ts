@@ -14,7 +14,7 @@ const io = new Server(server, {
   },
 });
 
-const PORT = process.env['PORT'] || 3000;
+const PORT = process.env['PORT'] || 3003;
 let users: { [key: string]: string } = {};
 
 io.on('connection', (socket) => {
