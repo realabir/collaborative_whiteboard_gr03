@@ -66,7 +66,7 @@ app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
 
 app.get('/*', function(req: any, res: any) {
 
-  res.sendFile(path.join(__dirname +'/dist/collaborative-whiteboard/index.html'));
+  res.sendFile(path.join(__dirname +'dist/collaborative-whiteboard/index.html"'));
 });
 
 // Start the app by listening on the default Heroku port
