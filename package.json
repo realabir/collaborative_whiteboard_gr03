@@ -1,9 +1,12 @@
 {
+  "engines": {
+    "node": "18.x"
+},
   "name": "collaborative-whiteboard",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node ./app/server/server.js",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
