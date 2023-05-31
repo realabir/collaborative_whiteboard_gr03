@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 
 @Component({
