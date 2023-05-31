@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var express = require("express");
+var express = require('express');
 var http = require("http");
 var socket_io_1 = require("socket.io");
 var app = express();
@@ -47,3 +47,12 @@ io.on('connection', function (socket) {
 server.listen(PORT, function () {
     console.log("Server started at http://localhost:".concat(PORT));
 });
+//Install express server
+var path = require('path');
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + '/dist/src'));
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname + '/dist/src/index.html'));
+});
+// Start the app by listening on the default Heroku port
+app.listen(process.env['PORT'] || 8080);

@@ -1,4 +1,4 @@
-import * as express from 'express';
+const express = require('express');
 import * as http from 'http';
 import { Server } from 'socket.io';
 
@@ -56,3 +56,18 @@ io.on('connection', (socket) => {
 server.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
 });
+
+//Install express server
+const path = require('path');
+
+
+// Serve only the static files form the dist directory
+app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
+
+app.get('/*', function(req: any, res: any) {
+
+  res.sendFile(path.join(__dirname +'/dist/collaborative-whiteboard/index.html'));
+});
+
+// Start the app by listening on the default Heroku port
+app.listen(process.env['PORT'] || 8080);
