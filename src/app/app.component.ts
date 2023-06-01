@@ -24,12 +24,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private textInput = document.createElement('input');
   public text = '';
+  public chatText = '';
   private textX = 0;
   private textY = 0;
   private textEditing = false;
   private textSize = 10;
 
-  messages: { user: string, text: string }[] = [];
+  messages: { user: string, chatText: string }[] = [];
 
   constructor() { }
 
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
     });
 
-    this.socket.on('chat-message', (message: { user: string, text: string }) => {
+    this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
       this.messages.push(message);
     });
 
@@ -81,9 +82,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   sendMessage() {
-    if (this.text.trim().length > 0) {
-      this.socket.emit('chat-message', this.text);
-      this.text = '';
+    if (this.chatText.trim().length > 0) {
+      this.socket.emit('chat-message', this.chatText);
+      this.chatText = '';
     }
   }
 
