@@ -1,6 +1,7 @@
 const express = require('express');
 import * as http from 'http';
 import { Server } from 'socket.io';
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -49,6 +50,14 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('user-disconnected', users[socket.id]);
     delete users[socket.id];
   });
+});
+
+// Statische Dateien aus dem Angular-Build-Verzeichnis bereitstellen
+app.use(express.static(path.join(__dirname, 'dist/collaborative-whiteboard')));
+
+// Alle Anfragen an die Angular-App weiterleiten
+app.get('*', (req: any, res: any) => {
+  res.sendFile(path.join(__dirname, 'dist/collaborative-whiteboard/index.html'));
 });
 
 server.listen(PORT, () => {

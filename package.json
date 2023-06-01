@@ -7,7 +7,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build",
+    "start:prod": "npm run build && npm run start",
+    "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -42,7 +43,7 @@
     "typescript": "~4.9.4"
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.5.",
-  "main": "index.js",
+  "main": "server.js",
   "author": "",
   "license": "ISC"
 }
