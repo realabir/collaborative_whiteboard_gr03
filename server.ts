@@ -28,8 +28,8 @@ io.on('connection', (socket: any) => {
     socket.broadcast.emit('user-connected', userName);
   });
 
-  socket.on('text', (data: any) => {
-    socket.broadcast.emit('text', data);
+  socket.on('chatText', (data: any) => {
+    socket.broadcast.emit('chatText', data);
   });
 
   socket.on('draw', (data: any) => {
@@ -39,7 +39,7 @@ io.on('connection', (socket: any) => {
   socket.on('chat-message', (data: any) => {
     const message = {
       user: users[socket.id],
-      text: data,
+      chatText: data,
     };
     io.emit('chat-message', message);
   });
