@@ -10,7 +10,6 @@
       <button class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
       <button class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
       <button class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
-      <button class="color" style="background-color: white" (click)="setColor('#ffffff')"></button>
     </div>
     <div class="line-width-picker">
       <span>Select line width:</span>
@@ -22,6 +21,13 @@
       <button class="text-size" (click)="setTextSize(20)">20</button>
       <button class="text-size" (click)="setTextSize(30)">30</button>
     </div>
+    <div class="text-size-picker">
+      <span>Select text size:</span>
+      <button class="text-size" (click)="setTextSize(10)">10</button>
+      <button class="text-size" (click)="setTextSize(20)">20</button>
+      <button class="text-size" (click)="setTextSize(30)">30</button>
+    </div>
+
     <div class="clear-button">
       <button (click)="clear()">Clear</button>
     </div>
