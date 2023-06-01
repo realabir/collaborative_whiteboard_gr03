@@ -33,6 +33,7 @@ io.on('connection', (socket: any) => {
   });
 
   socket.on('erase', (data: any) => {
+    console.log('Erasing at', data.x, data.y);
     socket.broadcast.emit('erase', data);
   });
 

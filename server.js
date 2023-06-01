@@ -24,6 +24,7 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('chatText', data);
     });
     socket.on('erase', function (data) {
+      console.log('Erasing at', data.x, data.y);
         socket.broadcast.emit('erase', data);
     });
     socket.on('draw', function (data) {

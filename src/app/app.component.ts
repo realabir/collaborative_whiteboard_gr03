@@ -60,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on('erase', (data: any) => {
+      console.log('Received erase event:', data);
       const { x, y } = data;
       this.erase(x, y);
     });
