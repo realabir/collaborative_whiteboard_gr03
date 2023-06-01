@@ -40,6 +40,10 @@ io.on('connection', (socket: any) => {
     socket.broadcast.emit('draw', data);
   });
 
+  socket.on('text', (data: any) => {
+    socket.broadcast.emit('text', data);
+  });
+
   socket.on('chat-message', (data: any) => {
     const message = {
       user: users[socket.id],

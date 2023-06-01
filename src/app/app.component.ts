@@ -65,9 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on('text', (data) => {
-      this.context.font = `${data.fontSize}px Arial`;
-      this.context.fillStyle = data.color;
-      this.context.fillText(data.text, data.x, data.y);
+      this.drawText(data.text, data.x, data.y, data.color, data.fontSize);
     });
 
     this.canvas.nativeElement.addEventListener('dblclick', (event) => this.onDoubleClick(event));
@@ -213,7 +211,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.text = this.textInput.value;
           document.body.removeChild(this.textInput);
           this.textEditing = false;
-          this.drawText(this.text, this.textX, this.textY);
+          this.drawText(this.text, this.textX, this.textY, this.color, this.textSize);
           this.socket.emit('text', { text: this.text, x: this.textX, y: this.textY });
         }
       });
@@ -221,9 +219,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
-  drawText(text: string, x: number, y: number) {
-    this.context.font = `${this.textSize}px Arial`;
-    this.context.fillStyle = this.color;
+
+  drawText(text: string, x: number, y: number, color: string, fontSize: number) {
+    this.context.font = `${fontSize}px Arial`;
+    this.context.fillStyle = color;
     this.context.fillText(text, x, y);
     this.socket.emit('text', {
       text: text,
@@ -233,7 +232,6 @@ export class AppComponent implements OnInit, OnDestroy {
       fontSize: this.textSize
     });
   }
-
 
   onMouseDownText(event: MouseEvent) {
     if (this.textEditing && event.target !== this.textInput) {

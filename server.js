@@ -29,6 +29,9 @@ io.on('connection', function (socket) {
     socket.on('draw', function (data) {
         socket.broadcast.emit('draw', data);
     });
+    socket.on('text', function (data) {
+        socket.broadcast.emit('text', data);
+    });
     socket.on('chat-message', function (data) {
         var message = {
             user: users[socket.id],
