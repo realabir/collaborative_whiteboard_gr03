@@ -17,7 +17,6 @@ app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
 app.get('/*', function (req, resp) {
     resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html');
 });
-app.listen(process.env['PORT'] || 8080);
 var PORT = process.env['PORT'] || 3000;
 var users = {};
 io.on('connection', function (socket) {
