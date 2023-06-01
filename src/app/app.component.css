@@ -86,7 +86,7 @@ canvas {
   width: 100px;
 }
 
-
 .text-size-picker{
-  margin-left: 15px;
+  margin-left: 100px;
+  font-weight: bold;
 }
