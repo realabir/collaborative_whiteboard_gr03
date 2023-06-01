@@ -1,6 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 
+enum Tool {
+  Pen,
+  Eraser
+}
 
 @Component({
   selector: 'app-root',
@@ -13,10 +17,11 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true })
   canvas!: ElementRef<HTMLCanvasElement>;
 
+  public tool: Tool = Tool.Pen;
+  public eraserSize = 10;
+
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
-  public eraserEnabled = false;
-  private eraserSize = 50;
   private drawing = false;
   public color = '#000000';
   public lineWidth = 10;
@@ -82,14 +87,18 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
-  setEraserEnabled(enabled: boolean) {
-    this.eraserEnabled = enabled;
+  setTool(tool: Tool) {
+    this.tool = tool;
   }
 
-  erase(x: number, y: number) {
-    const radius = this.eraserSize
-    this.context.clearRect(x - radius, y - radius, this.lineWidth, this.lineWidth);
+  setEraserSize(size: number) {
+    this.eraserSize = size;
   }
+  erase(x: number, y: number) {
+    const halfSize = this.eraserSize / 2;
+    this.context.clearRect(x - halfSize, y - halfSize, this.eraserSize, this.eraserSize);
+  }
+
 
   sendMessage() {
     if (this.chatText.trim().length > 0) {
@@ -110,10 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
-    if (this.eraserEnabled) {
-      this.erase(currentX, currentY);
-      this.socket.emit('erase', { x: currentX, y: currentY });
-    } else {
+    if (this.tool === Tool.Pen) {
       this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
       this.socket.emit('draw', {
         x0: this.lastX,
@@ -123,10 +129,14 @@ export class AppComponent implements OnInit, OnDestroy {
         color: this.color,
         lineWidth: this.lineWidth
       });
+    } else if (this.tool === Tool.Eraser) {
+      this.erase(currentX, currentY);
+      this.socket.emit('erase', { x: currentX, y: currentY });
     }
     this.lastX = currentX;
     this.lastY = currentY;
   }
+
 
   onMouseUp(event: MouseEvent) {
     if (!this.drawing) {

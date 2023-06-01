@@ -2,107 +2,71 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 canvas {
-  border: 1px solid #ccc;
+  border: 1px solid #000;
+  margin-bottom: 10px;
 }
 
 .controls {
   display: flex;
-  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .color-picker,
 .line-width-picker,
-.clear-button {
-  margin-right: 20px;
-}
-
-.color-picker span,
-.line-width-picker span {
+.clear-button,
+.tool-picker,
+.eraser-size-picker,
+.text-size-picker {
+  display: flex;
+  align-items: center;
   margin-right: 10px;
-  font-weight: bold;
 }
 
-.color {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin-right: 5px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
-.line-width {
-  padding: 5px 10px;
-  margin-right: 5px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
+.color,
+.line-width,
+.eraser-size,
 .text-size {
-  padding: 5px 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
   margin-right: 5px;
-  border: none;
-  outline: none;
   cursor: pointer;
 }
 
-.clear-button button {
+.tool {
   padding: 5px 10px;
   border: none;
-  outline: none;
   cursor: pointer;
-  background-color: #ccc;
-}
-
-.clear-button button:hover {
-  background-color: #aaa;
-}
-
-#chat {
-  position: absolute;
-  bottom: 10px;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: white;
-  z-index: 1;
-}
-#chat #messages {
-  height: 200px;
-  overflow: auto;
-  margin-bottom: 10px;
-}
-#chat input[type="text"] {
-  width: calc(100% - 60px);
-  margin-right: 10px;
-}
-#chat button {
-  width: 100px;
-}
-
-.text-size-picker{
-  margin-left: 103px;
-  font-weight: bold;
-}
-
-.eraser-button button {
-  padding: 5px 10px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  background-color: #ccc;
-}
-
-.eraser-button button:hover {
-  background-color: #aaa;
 }
 
 .selected {
   border: 2px solid #000;
+}
+
+#chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#messages {
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 200px;
+}
+
+#send {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
 }

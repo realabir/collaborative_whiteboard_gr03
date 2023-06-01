@@ -20,8 +20,16 @@
     <div class="clear-button">
       <button (click)="clear()">Clear</button>
     </div>
-    <div class="eraser-button">
-      <button [class.selected]="eraserEnabled" (click)="setEraserEnabled(!eraserEnabled)">Eraser</button>
+    <div class="tool-picker">
+      <span>Select tool:</span>
+      <button [class.selected]="tool === 0" class="tool" (click)="setTool(0)">Pen</button>
+      <button [class.selected]="tool === 1" class="tool" (click)="setTool(1)">Eraser</button>
+    </div>
+    <div class="eraser-size-picker" *ngIf="tool === 1">
+      <span>Select eraser size:</span>
+      <button [class.selected]="eraserSize === 10" class="eraser-size" (click)="setEraserSize(10)">10</button>
+      <button [class.selected]="eraserSize === 20" class="eraser-size" (click)="setEraserSize(20)">20</button>
+      <button [class.selected]="eraserSize === 30" class="eraser-size" (click)="setEraserSize(30)">30</button>
     </div>
   </div>
   <div class="text-size-picker">
