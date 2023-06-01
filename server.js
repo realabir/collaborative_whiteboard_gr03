@@ -4,7 +4,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server, {
     cors: {
         origin: [
-            'https://collaborative-whiteboard-gr3.herokuapp.com/'
+            'https://cwhiteboard-test.herokuapp.com/'
         ],
     },
 });
