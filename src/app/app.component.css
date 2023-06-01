@@ -49,6 +49,10 @@ canvas {
   border: 2px solid #000;
 }
 
+.eraser-size-picker {
+  margin-top: 10px;
+}
+
 #chat {
   display: flex;
   flex-direction: column;
