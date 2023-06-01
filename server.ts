@@ -1,10 +1,8 @@
 const express = require('express');
-import * as http from 'http';
-import { Server } from 'socket.io';
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, {
   cors: {
     origin: [
       'https://collaborative-whiteboard-gr3.herokuapp.com/'
@@ -12,17 +10,16 @@ const io = new Server(server, {
   },
 });
 
-
 app.use(express.static(__dirname + '/dist/collaborative-whiteboard'))
 app.get('/*', (req: any, resp: any) =>{
   resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html')
 })
 
-app.listen(process.env['PORT'] || 8080)
+
 
 let users: { [key: string]: string } = {};
 
-io.on('connection', (socket) => {
+io.on('connection', (socket: any) => {
   console.log(`New user connected: ${socket.id}`);
   socket.emit('user-id', socket.id);
 
@@ -31,15 +28,15 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('user-connected', userName);
   });
 
-  socket.on('text', (data) => {
+  socket.on('text', (data: any) => {
     socket.broadcast.emit('text', data);
   });
 
-  socket.on('draw', (data) => {
+  socket.on('draw', (data: any) => {
     socket.broadcast.emit('draw', data);
   });
 
-  socket.on('chat-message', (data) => {
+  socket.on('chat-message', (data: any) => {
     const message = {
       user: users[socket.id],
       text: data,
@@ -58,3 +55,4 @@ io.on('connection', (socket) => {
   });
 });
 
+server.listen( process.env['PORT'] || 8080 );

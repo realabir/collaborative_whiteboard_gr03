@@ -1,11 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
-var http = require("http");
-var socket_io_1 = require("socket.io");
 var app = express();
-var server = http.createServer(app);
-var io = new socket_io_1.Server(server, {
+var server = require('http').createServer(app);
+var io = require('socket.io')(server, {
     cors: {
         origin: [
             'https://collaborative-whiteboard-gr3.herokuapp.com/'
@@ -16,8 +12,6 @@ app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
 app.get('/*', function (req, resp) {
     resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html');
 });
-app.listen(process.env['PORT'] || 8080);
-
 var users = {};
 io.on('connection', function (socket) {
     console.log("New user connected: ".concat(socket.id));
@@ -48,3 +42,4 @@ io.on('connection', function (socket) {
         delete users[socket.id];
     });
 });
+server.listen(process.env['PORT'] || 8080);
