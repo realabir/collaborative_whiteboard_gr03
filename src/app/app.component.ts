@@ -201,7 +201,7 @@ export class AppComponent implements OnInit, OnDestroy {
       x: x,
       y: y,
       color: this.color,
-      fontSize: this.textSize * 2 * 2
+      fontSize: this.textSize
     });
   }
 
@@ -231,7 +231,7 @@ export class AppComponent implements OnInit, OnDestroy {
           x: this.textX,
           y: this.textY,
           color: this.color,
-          fontSize: this.textSize * 2 * 2
+          fontSize: this.textSize
         });
       } else {
         this.text = this.textInput.value;
@@ -246,7 +246,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private finishTextEditing() {
     this.text = this.textInput.value;
     document.body.removeChild(this.textInput);
-    this.context.font = `${this.textSize * 2}px Arial`;
+    this.context.font = `${this.textSize}px Arial`;
     this.context.fillStyle = this.color;
     this.context.fillText(this.text, this.textX, this.textY);
     this.textEditing = false;

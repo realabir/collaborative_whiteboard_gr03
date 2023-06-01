@@ -44,6 +44,14 @@ canvas {
   cursor: pointer;
 }
 
+.text-size {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 .clear-button button {
   padding: 5px 10px;
   border: none;
@@ -58,8 +66,7 @@ canvas {
 
 #chat {
   position: absolute;
-  bottom: 10px; /* change the top property to bottom /
-left: calc(50% - 150px); / center the chat horizontally */
+  bottom: 10px;
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
