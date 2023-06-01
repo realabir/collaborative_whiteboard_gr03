@@ -131,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
         color: this.color,
         lineWidth: this.lineWidth
       });
-    } else if (this.tool === Tool.Eraser && this.tool === this.previousTool) {
+    } else if (this.tool === Tool.Eraser && this.previousTool === Tool.Eraser) {
       this.erase(currentX, currentY);
       this.socket.emit('erase', { x: currentX, y: currentY });
     }
