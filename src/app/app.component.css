@@ -94,3 +94,15 @@ canvas {
 .selected {
   border: 2px solid #000;
 }
+
+.eraser-button button {
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.eraser-button button:hover {
+  background-color: #aaa;
+}

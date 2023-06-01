@@ -20,6 +20,9 @@
     <div class="clear-button">
       <button (click)="clear()">Clear</button>
     </div>
+    <div class="eraser-button">
+      <button [class.selected]="eraserEnabled" (click)="setEraserEnabled(!eraserEnabled)">Eraser</button>
+    </div>
   </div>
   <div class="text-size-picker">
     <span>Select text size: </span>

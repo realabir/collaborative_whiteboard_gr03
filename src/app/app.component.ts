@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
-
+  public eraserEnabled = false;
   private drawing = false;
   public color = '#000000';
   public lineWidth = 5;
@@ -81,6 +81,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
+  setEraserEnabled(enabled: boolean) {
+    this.eraserEnabled = enabled;
+  }
+
+  erase(x: number, y: number) {
+    const radius = this.lineWidth / 2;
+    this.context.clearRect(x - radius, y - radius, this.lineWidth, this.lineWidth);
+  }
+
   sendMessage() {
     if (this.chatText.trim().length > 0) {
       this.socket.emit('chat-message', this.chatText);
@@ -100,15 +109,20 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
-    this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
-    this.socket.emit('draw', {
-      x0: this.lastX,
-      y0: this.lastY,
-      x1: currentX,
-      y1: currentY,
-      color: this.color,
-      lineWidth: this.lineWidth
-    });
+    if (this.eraserEnabled) {
+      this.erase(currentX, currentY);
+      this.socket.emit('erase', { x: currentX, y: currentY });
+    } else {
+      this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
+      this.socket.emit('draw', {
+        x0: this.lastX,
+        y0: this.lastY,
+        x1: currentX,
+        y1: currentY,
+        color: this.color,
+        lineWidth: this.lineWidth
+      });
+    }
     this.lastX = currentX;
     this.lastY = currentY;
   }
