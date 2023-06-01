@@ -32,6 +32,10 @@ io.on('connection', (socket: any) => {
     socket.broadcast.emit('chatText', data);
   });
 
+  socket.on('erase', (data: any) => {
+    socket.broadcast.emit('erase', data);
+  });
+
   socket.on('draw', (data: any) => {
     socket.broadcast.emit('draw', data);
   });

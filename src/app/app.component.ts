@@ -38,8 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   messages: { user: string, chatText: string }[] = [];
 
-  constructor() { }
-
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
     this.socket = io('https://cwhiteboard-test.herokuapp.com/');
@@ -91,12 +89,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.tool = tool;
   }
 
-  setEraserSize(size: number) {
-    this.eraserSize = size;
-  }
   erase(x: number, y: number) {
     const halfSize = this.eraserSize / 2;
     this.context.clearRect(x - halfSize, y - halfSize, this.eraserSize, this.eraserSize);
+    this.socket.emit('erase', {x, y})
   }
 
 
