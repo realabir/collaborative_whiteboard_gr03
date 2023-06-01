@@ -65,7 +65,9 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on('text', (data) => {
-      this.drawText(data.text, data.x, data.y, data.color, data.fontSize);
+      this.context.font = `${data.fontSize}px Arial`;
+      this.context.fillStyle = data.color;
+      this.context.fillText(data.text, data.x, data.y);
     });
 
     this.canvas.nativeElement.addEventListener('dblclick', (event) => this.onDoubleClick(event));
@@ -219,10 +221,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
-
   drawText(text: string, x: number, y: number, color: string, fontSize: number) {
     this.context.font = `${fontSize}px Arial`;
-    this.context.fillStyle = color;
+    this.context.fillStyle = this.color;
     this.context.fillText(text, x, y);
     this.socket.emit('text', {
       text: text,
