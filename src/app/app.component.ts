@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   canvas!: ElementRef<HTMLCanvasElement>;
 
   public tool: Tool = Tool.Pen;
+  private previousTool: Tool = Tool.Pen;
   public eraserSize = 50;
 
   private context!: CanvasRenderingContext2D;
@@ -95,11 +96,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    if (this.tool === Tool.Eraser) {
       const halfSize = this.eraserSize / 2;
-      this.socket.emit('erase', {x, y});
       this.context.clearRect(x - halfSize, y - halfSize, this.eraserSize, this.eraserSize);
-    }
+      this.socket.emit('erase', {x, y});
   }
 
 
@@ -132,12 +131,13 @@ export class AppComponent implements OnInit, OnDestroy {
         color: this.color,
         lineWidth: this.lineWidth
       });
-    } else if (this.tool === Tool.Eraser) {
+    } else if (this.tool === Tool.Eraser && this.tool === this.previousTool) {
       this.erase(currentX, currentY);
       this.socket.emit('erase', { x: currentX, y: currentY });
     }
     this.lastX = currentX;
     this.lastY = currentY;
+    this.previousTool = this.tool;
   }
 
 
