@@ -8,11 +8,16 @@ var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
         origin: [
-          'http://localhost:4200',
+            'http://localhost:4200',
             'https://collaborative-whiteboard-gr3.herokuapp.com'
         ],
     },
 });
+app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
+app.get('/*', function (req, resp) {
+    resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html');
+});
+app.listen(process.env['PORT'] || 8080);
 var PORT = process.env['PORT'] || 3000;
 var users = {};
 io.on('connection', function (socket) {

@@ -13,6 +13,14 @@ const io = new Server(server, {
   },
 });
 
+
+app.use(express.static(__dirname + '/dist/collaborative-whiteboard'))
+app.get('/*', (req: any, resp: any) =>{
+  resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html')
+})
+
+app.listen(process.env['PORT'] || 8080)
+
 const PORT = process.env['PORT'] || 3000;
 let users: { [key: string]: string } = {};
 
