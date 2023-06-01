@@ -17,8 +17,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private socket!: Socket;
 
   private drawing = false;
-  private color = '#000000';
-  private lineWidth = 5;
+  public color = '#000000';
+  public lineWidth = 5;
   private lastX = 0;
   private lastY = 0;
 
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private textX = 0;
   private textY = 0;
   private textEditing = false;
-  private textSize = 10;
+  public textSize = 10;
 
   messages: { user: string, chatText: string }[] = [];
 
