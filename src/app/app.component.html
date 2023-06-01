@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link rel="stylesheet" href="component.css">
-</head>
 <body>
 <div class="container">
   <div class="whiteboard">
@@ -34,25 +31,17 @@
         <button [class.selected]="eraserSize === 50" class="eraser-size" (click)="setEraserSize(50)">50</button>
         <button [class.selected]="eraserSize === 100" class="eraser-size" (click)="setEraserSize(100)">100</button>
       </div>
-      <div class="text-size-picker">
-        <span>Text size: </span>
-        <button [class.selected]="textSize === 20" class="text-size" (click)="setTextSize(20)">20</button>
-        <button [class.selected]="textSize === 30" class="text-size" (click)="setTextSize(30)">30</button>
-        <button [class.selected]="textSize === 40" class="text-size" (click)="setTextSize(40)">40</button>
-      </div>
     </div>
   </div>
-  <div class="chatbox">
+  <div class="chat-box">
     <div id="chat">
       <div id="messages">
         <div *ngFor="let message of messages">
           <strong>{{ message.user }}:</strong> {{ message.chatText }}
         </div>
       </div>
-      <div class="chat-input">
-        <input type="text" [(ngModel)]="chatText" placeholder="Type your message..." (keydown.enter)="sendMessage()">
-        <button id="send" (click)="sendMessage()">Send</button>
-      </div>
+      <input type="text" [(ngModel)]="chatText" placeholder="Type your message..." (keydown.enter)="sendMessage()">
+      <button id="send" (click)="sendMessage()">Send</button>
     </div>
   </div>
 </div>
