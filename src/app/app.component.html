@@ -14,19 +14,19 @@
         <button [class.selected]="color === '#ffff00'" class="color" style="background-color: yellow" (click)="setColor('#ffff00')"></button>
       </div>
       <div class="line-width-picker">
-        <span>Line width:</span>
+        <span>Line Width:</span>
         <button [class.selected]="lineWidth === 10" class="line-width" (click)="setLineWidth(10)">10</button>
         <button [class.selected]="lineWidth === 20" class="line-width" (click)="setLineWidth(20)">20</button>
         <button [class.selected]="lineWidth === 30" class="line-width" (click)="setLineWidth(30)">30</button>
       </div>
       <div class="text-size-picker">
-        <span>Text size: </span>
+        <span>Text Size: </span>
         <button [class.selected]="textSize === 20" class="text-size" (click)="setTextSize(20)">20</button>
         <button [class.selected]="textSize === 30" class="text-size" (click)="setTextSize(30)">30</button>
         <button [class.selected]="textSize === 40" class="text-size" (click)="setTextSize(40)">40</button>
       </div>
       <div class="tool-picker">
-        <span>Tool:</span>
+        <span>Tools:</span>
         <button [class.selected]="tool === 0" class="tool" (click)="setTool(0)">Pen</button>
         <button [class.selected]="tool === 1" class="tool" (click)="setTool(1)">Eraser</button>
       </div>
