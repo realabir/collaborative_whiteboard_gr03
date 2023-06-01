@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private textX = 0;
   private textY = 0;
   private textEditing = false;
+  private textSize = 10;
 
   messages: { user: string, text: string }[] = [];
 
@@ -144,6 +145,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.lineWidth = lineWidth;
   }
 
+  setTextSize(textSize: number) {
+    this.textSize = textSize;
+  }
+
   clear() {
     this.clearCanvas();
     this.socket.emit('clear');
@@ -157,7 +162,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.textInput.style.position = 'absolute';
       this.textInput.style.left = event.clientX + 'px';
       this.textInput.style.top = event.clientY + 'px';
-      this.textInput.style.fontSize = (this.lineWidth * 2 * 2) + 'px'
+      this.textInput.style.fontSize = this.textSize + 'px'
       this.textInput.style.border = 'none';
       this.textInput.style.padding = '0';
       this.textInput.style.margin = '0';
@@ -188,7 +193,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   drawText(text: string, x: number, y: number) {
-    this.context.font = `${this.lineWidth * 2 * 2}px Arial`;
+    this.context.font = `${this.textSize}px Arial`;
     this.context.fillStyle = this.color;
     this.context.fillText(text, x, y);
     this.socket.emit('text', {
@@ -196,7 +201,7 @@ export class AppComponent implements OnInit, OnDestroy {
       x: x,
       y: y,
       color: this.color,
-      fontSize: this.lineWidth * 2 * 2
+      fontSize: this.textSize * 2 * 2
     });
   }
 
@@ -226,7 +231,7 @@ export class AppComponent implements OnInit, OnDestroy {
           x: this.textX,
           y: this.textY,
           color: this.color,
-          fontSize: this.lineWidth * 2 * 2
+          fontSize: this.textSize * 2 * 2
         });
       } else {
         this.text = this.textInput.value;
@@ -241,7 +246,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private finishTextEditing() {
     this.text = this.textInput.value;
     document.body.removeChild(this.textInput);
-    this.context.font = `${this.lineWidth * 2}px Arial`;
+    this.context.font = `${this.textSize * 2}px Arial`;
     this.context.fillStyle = this.color;
     this.context.fillText(this.text, this.textX, this.textY);
     this.textEditing = false;
