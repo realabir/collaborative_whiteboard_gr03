@@ -59,6 +59,11 @@ export class AppComponent implements OnInit, OnDestroy {
       this.messages.push(message);
     });
 
+    this.socket.on('erase', (data: any) => {
+      const { x, y } = data;
+      this.erase(x, y);
+    });
+
     this.socket.on('text', (data) => {
       this.context.font = `${data.fontSize}px Arial`;
       this.context.fillStyle = data.color;
