@@ -213,7 +213,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.text = this.textInput.value;
           document.body.removeChild(this.textInput);
           this.textEditing = false;
-          this.drawText(this.text, this.textX, this.textY, this.color, this.textSize);
+          this.drawText(this.text, this.textX, this.textY);
           this.socket.emit('text', { text: this.text, x: this.textX, y: this.textY });
         }
       });
@@ -221,8 +221,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
-  drawText(text: string, x: number, y: number, color: string, fontSize: number) {
-    this.context.font = `${fontSize}px Arial`;
+  drawText(text: string, x: number, y: number) {
+    this.context.font = `${this.textSize}px Arial`;
     this.context.fillStyle = this.color;
     this.context.fillText(text, x, y);
     this.socket.emit('text', {
