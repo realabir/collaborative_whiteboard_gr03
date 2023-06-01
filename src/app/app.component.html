@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Your App</title>
-  <!-- Füge den Skript-Tag hier ein -->
-  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-</head>
 <body>
 <div class="container">
   <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
@@ -16,12 +10,14 @@
       <button class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
       <button class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
       <button class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
+      <button class="color" style="background-color: blue" (click)="setColor('#ffffff')"></button>
     </div>
     <div class="line-width-picker">
       <span>Select line width:</span>
       <button class="line-width" (click)="setLineWidth(5)">5</button>
       <button class="line-width" (click)="setLineWidth(10)">10</button>
       <button class="line-width" (click)="setLineWidth(20)">20</button>
+      <button class="line-width" (click)="setLineWidth(50)">20</button>
     </div>
     <div class="clear-button">
       <button (click)="clear()">Clear</button>
