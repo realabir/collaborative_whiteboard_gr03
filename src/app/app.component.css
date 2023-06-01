@@ -90,3 +90,7 @@ canvas {
   margin-left: 109px;
   font-weight: bold;
 }
+
+.selected {
+  border: 2px solid #000;
+}

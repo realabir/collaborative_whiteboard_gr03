@@ -6,16 +6,16 @@
   <div class="controls">
     <div class="color-picker">
       <span>Select color:</span>
-      <button class="color" style="background-color: black" (click)="setColor('#000000')"></button>
-      <button class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
-      <button class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
-      <button class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
+      <button [class.selected]="color === '#000000'" class="color" style="background-color: black" (click)="setColor('#000000')"></button>
+      <button [class.selected]="color === '#ff0000'" class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
+      <button [class.selected]="color === '#00ff00'" class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
+      <button [class.selected]="color === '#0000ff'" class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
     </div>
     <div class="line-width-picker">
       <span>Select line width:</span>
-      <button class="line-width" (click)="setLineWidth(5)">5</button>
-      <button class="line-width" (click)="setLineWidth(10)">10</button>
-      <button class="line-width" (click)="setLineWidth(20)">20</button>
+      <button [class.selected]="lineWidth === 10" class="line-width" (click)="setLineWidth(10)">10</button>
+      <button [class.selected]="lineWidth === 20" class="line-width" (click)="setLineWidth(20)">20</button>
+      <button [class.selected]="lineWidth === 30" class="line-width" (click)="setLineWidth(30)">30</button>
     </div>
     <div class="clear-button">
       <button (click)="clear()">Clear</button>
@@ -23,9 +23,9 @@
   </div>
   <div class="text-size-picker">
     <span>Select text size: </span>
-    <button class="text-size" (click)="setTextSize(10)">10</button>
-    <button class="text-size" (click)="setTextSize(20)">20</button>
-    <button class="text-size" (click)="setTextSize(30)">30</button>
+    <button [class.selected]="textSize === 20" class="text-size" (click)="setTextSize(20)">20</button>
+    <button [class.selected]="textSize === 30" class="text-size" (click)="setTextSize(30)">30</button>
+    <button [class.selected]="textSize === 40" class="text-size" (click)="setTextSize(40)">40</button>
   </div>
   <div id="chat">
     <div id="messages">
@@ -34,7 +34,6 @@
       </div>
     </div>
     <input type="text" [(ngModel)]="chatText" placeholder="Type your message..." (keydown.enter)="sendMessage()">
-    <br>
     <button id="send" (click)="sendMessage()">Send</button>
   </div>
 </div>
