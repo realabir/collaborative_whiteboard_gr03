@@ -63,6 +63,26 @@ canvas {
   text-decoration: underline;
 }
 
+
+.text-size-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.text-size {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.text-size.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .clear-button {
   margin-right: 10px;
 }
@@ -86,19 +106,6 @@ canvas {
   text-decoration: underline;
 }
 
-.eraser-size-picker {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-}
-
-.eraser-size {
-  margin-right: 5px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-}
 
 .chat-box {
   display: flex;
