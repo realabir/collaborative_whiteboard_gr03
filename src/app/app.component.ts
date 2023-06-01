@@ -16,9 +16,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
   public eraserEnabled = false;
+  private eraserSize = 50;
   private drawing = false;
   public color = '#000000';
-  public lineWidth = 5;
+  public lineWidth = 10;
   private lastX = 0;
   private lastY = 0;
 
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const radius = this.lineWidth / 2;
+    const radius = this.eraserSize
     this.context.clearRect(x - radius, y - radius, this.lineWidth, this.lineWidth);
   }
 
