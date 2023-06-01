@@ -17,7 +17,8 @@ app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
 app.get('/*', function (req, resp) {
     resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html');
 });
-var PORT = process.env['PORT'] || 3000;
+app.listen(process.env['PORT'] || 8080);
+
 var users = {};
 io.on('connection', function (socket) {
     console.log("New user connected: ".concat(socket.id));
@@ -47,7 +48,4 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('user-disconnected', users[socket.id]);
         delete users[socket.id];
     });
-});
-server.listen(PORT, function () {
-    console.log("Server started at http://localhost:".concat(PORT));
 });

@@ -19,8 +19,8 @@ app.get('/*', (req: any, resp: any) =>{
   resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html')
 })
 
+app.listen(process.env['PORT'] || 8080)
 
-const PORT = process.env['PORT'] || 3000;
 let users: { [key: string]: string } = {};
 
 io.on('connection', (socket) => {
@@ -59,6 +59,3 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`);
-});
