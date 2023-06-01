@@ -5,14 +5,14 @@
   <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
   <div class="controls">
     <div class="color-picker">
-      <span>Select color:</span>
+      <span>Color:</span>
       <button [class.selected]="color === '#000000'" class="color" style="background-color: black" (click)="setColor('#000000')"></button>
       <button [class.selected]="color === '#ff0000'" class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
       <button [class.selected]="color === '#00ff00'" class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
       <button [class.selected]="color === '#0000ff'" class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
     </div>
     <div class="line-width-picker">
-      <span>Select line width:</span>
+      <span>Line width:</span>
       <button [class.selected]="lineWidth === 10" class="line-width" (click)="setLineWidth(10)">10</button>
       <button [class.selected]="lineWidth === 20" class="line-width" (click)="setLineWidth(20)">20</button>
       <button [class.selected]="lineWidth === 30" class="line-width" (click)="setLineWidth(30)">30</button>
@@ -21,19 +21,18 @@
       <button (click)="clear()">Clear</button>
     </div>
     <div class="tool-picker">
-      <span>Select tool:</span>
+      <span>Select Tool:</span>
       <button [class.selected]="tool === 0" class="tool" (click)="setTool(0)">Pen</button>
       <button [class.selected]="tool === 1" class="tool" (click)="setTool(1)">Eraser</button>
     </div>
     <div class="eraser-size-picker" *ngIf="tool === 1">
-      <span>Select eraser size:</span>
-      <button [class.selected]="eraserSize === 10" class="eraser-size" (click)="setEraserSize(10)">10</button>
-      <button [class.selected]="eraserSize === 20" class="eraser-size" (click)="setEraserSize(20)">20</button>
-      <button [class.selected]="eraserSize === 30" class="eraser-size" (click)="setEraserSize(30)">30</button>
+      <span>Eraser size:</span>
+      <button [class.selected]="eraserSize === 50" class="eraser-size" (click)="setEraserSize(50)">50</button>
+      <button [class.selected]="eraserSize === 100" class="eraser-size" (click)="setEraserSize(100)">100</button>
     </div>
   </div>
   <div class="text-size-picker">
-    <span>Select text size: </span>
+    <span>Text size: </span>
     <button [class.selected]="textSize === 20" class="text-size" (click)="setTextSize(20)">20</button>
     <button [class.selected]="textSize === 30" class="text-size" (click)="setTextSize(30)">30</button>
     <button [class.selected]="textSize === 40" class="text-size" (click)="setTextSize(40)">40</button>

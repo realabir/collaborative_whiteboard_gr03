@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   canvas!: ElementRef<HTMLCanvasElement>;
 
   public tool: Tool = Tool.Pen;
-  public eraserSize = 10;
+  public eraserSize = 50;
 
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;

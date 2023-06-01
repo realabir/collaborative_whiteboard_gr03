@@ -2,75 +2,133 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f1f1f1;
 }
 
 canvas {
-  border: 1px solid #000;
-  margin-bottom: 10px;
+  border: 1px solid #ccc;
 }
 
 .controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-top: 10px;
 }
 
-.color-picker,
-.line-width-picker,
-.clear-button,
-.tool-picker,
-.eraser-size-picker,
-.text-size-picker {
+.color-picker {
   display: flex;
   align-items: center;
   margin-right: 10px;
 }
 
-.color,
-.line-width,
-.eraser-size,
-.text-size {
-  width: 30px;
-  height: 30px;
+.color {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  border: none;
   margin-right: 5px;
-  cursor: pointer;
-}
-
-.tool {
-  padding: 5px 10px;
   border: none;
-  cursor: pointer;
+  outline: none;
 }
 
-.selected {
+.color.selected {
   border: 2px solid #000;
 }
 
+.line-width-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.line-width {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.line-width.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.clear-button {
+  margin-right: 10px;
+}
+
+.tool-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.tool {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.tool.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .eraser-size-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.eraser-size {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.text-size-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 10px;
 }
 
+.text-size {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 #chat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-top: 20px;
 }
 
 #messages {
-  margin-bottom: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#messages div {
+  margin-bottom: 5px;
 }
 
 input[type="text"] {
-  margin-bottom: 10px;
+  margin-right: 10px;
   padding: 5px;
-  width: 200px;
+  width: 300px;
 }
 
 #send {
   padding: 5px 10px;
-  border: none;
   cursor: pointer;
 }
+
