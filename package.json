@@ -6,8 +6,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
-    "start:prod": "ng build && ng serve",
+    "start": "ng serve",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
