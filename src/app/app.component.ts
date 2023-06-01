@@ -60,7 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.socket.on('erase', (data: any) => {
-      console.log('Received erase event:', data);
       const { x, y } = data;
       this.erase(x, y);
     });
@@ -99,6 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.tool === Tool.Eraser) {
       const halfSize = this.eraserSize / 2;
       this.context.clearRect(x - halfSize, y - halfSize, this.eraserSize, this.eraserSize);
+      this.socket.emit('erase', {x, y});
     }
     this.socket.emit('erase', {x, y});
   }
