@@ -30,10 +30,10 @@
   <div id="chat">
     <div id="messages">
       <div *ngFor="let message of messages">
-        <strong>{{ message.user }}:</strong> {{ message.text }}
+        <strong>{{ message.user }}:</strong> {{ message.chatText }}
       </div>
     </div>
-    <input type="text" [(ngModel)]="text" placeholder="Type your message..." (keydown.enter)="sendMessage()">
+    <input type="text" [(ngModel)]="chatText" placeholder="Type your message..." (keydown.enter)="sendMessage()">
     <button id="send" (click)="sendMessage()">Send</button>
   </div>
 </div>
