@@ -25,13 +25,13 @@
         <button [class.selected]="textSize === 40" class="text-size" (click)="setTextSize(40)">40</button>
       </div>
       <div class="tool-picker">
-        <span>Select Tool:</span>
+        <span>Tool:</span>
         <button [class.selected]="tool === 0" class="tool" (click)="setTool(0)">Pen</button>
         <button [class.selected]="tool === 1" class="tool" (click)="setTool(1)">Eraser</button>
       </div>
-    </div>
-    <div class="clear-button">
-      <button (click)="clear()">Clear</button>
+      <div class="clear-button">
+        <button (click)="clear()">Clear</button>
+      </div>
     </div>
   </div>
   <div class="chat-box">

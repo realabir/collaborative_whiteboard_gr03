@@ -38,6 +38,7 @@ canvas {
   margin-right: 5px;
   border: none;
   outline: none;
+  font-weight: bold;
 }
 
 .color.selected {
@@ -56,6 +57,7 @@ canvas {
   outline: none;
   background-color: transparent;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .line-width.selected {
@@ -76,6 +78,7 @@ canvas {
   outline: none;
   background-color: transparent;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .text-size.selected {
@@ -91,6 +94,7 @@ canvas {
   display: flex;
   align-items: center;
   margin-right: 10px;
+  font-weight: bold;
 }
 
 .tool {
