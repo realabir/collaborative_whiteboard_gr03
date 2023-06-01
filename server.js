@@ -9,8 +9,7 @@ var io = new socket_io_1.Server(server, {
     cors: {
         origin: [
             'http://localhost:4200',
-            'https://collaborative-whiteboard-gr3.herokuapp.com',
-            'http://localhost:3000',
+            'https://collaborative-whiteboard-gr3.herokuapp.com'
         ],
     },
 });
@@ -48,12 +47,3 @@ io.on('connection', function (socket) {
 server.listen(PORT, function () {
     console.log("Server started at http://localhost:".concat(PORT));
 });
-//Install express server
-var path = require('path');
-// Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist/collaborative-whiteboard'));
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + 'dist/collaborative-whiteboard/index.html"'));
-});
-// Start the app by listening on the default Heroku port
-app.listen(process.env['PORT'] || 8080);

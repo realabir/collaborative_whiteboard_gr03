@@ -34,7 +34,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
-    this.socket = io('https://collaborative-whiteboard-gr03.herokuapp.com');
+    this.socket = io('http://localhost:3000');
+    //this.socket = io('https://collaborative-whiteboard-gr03.herokuapp.com');
 
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);
