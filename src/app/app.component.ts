@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private textX = 0;
   private textY = 0;
   private textEditing = false;
-  public textSize = 10;
+  public textSize = 20;
 
   messages: { user: string, chatText: string }[] = [];
 
