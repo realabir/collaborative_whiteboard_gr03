@@ -19,7 +19,6 @@ let users: { [key: string]: string } = {};
 let drawings: any[] = []; // Store drawings
 let texts: any[] = []; // Store texts
 let chatMessages: any[] = []; // Store chat messages
-let onlineUsers: string[] = []; // Store online users
 
 io.on('connection', (socket: any) => {
   console.log(`New user connected: ${socket.id}`);
@@ -43,15 +42,6 @@ io.on('connection', (socket: any) => {
   socket.on('new-user', (userName: string) => {
     users[socket.id] = userName;
     socket.broadcast.emit('user-connected', userName);
-
-    // Send the list of online users to the newly connected user
-    socket.emit('online-users', onlineUsers);
-
-    // Add the newly connected user to the online users list
-    onlineUsers.push(userName);
-
-    // Send the updated list of online users to all connected clients
-    io.emit('online-users', onlineUsers);
   });
 
   socket.on('draw', (data: any) => {
@@ -91,18 +81,8 @@ io.on('connection', (socket: any) => {
   socket.on('disconnect', () => {
     console.log(`User disconnected: ${socket.id}`);
     const disconnectedUser = users[socket.id];
-
-    if (disconnectedUser) {
-      delete users[socket.id];
-
-      // Remove the disconnected user from the online users list
-      onlineUsers = onlineUsers.filter(user => user !== disconnectedUser);
-
-      // Send the updated list of online users to all connected clients
-      io.emit('online-users', onlineUsers);
-
-      socket.broadcast.emit('user-disconnected', disconnectedUser);
-    }
+    delete users[socket.id];
+    socket.broadcast.emit('user-disconnected', disconnectedUser);
   });
 });
 
