@@ -128,8 +128,8 @@ export class AppComponent implements OnInit, OnDestroy {
     const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
     if (this.tool === Tool.Pen) {
-      this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
       if (!this.isErasing) {
+        this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
         this.socket.emit('draw', {
           x0: this.lastX,
           y0: this.lastY,
@@ -140,8 +140,8 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       }
     } else if (this.tool === Tool.Eraser) {
-      this.erase(currentX, currentY);
       if (this.isErasing) {
+        this.erase(currentX, currentY);
         this.socket.emit('erase', {
           x: currentX,
           y: currentY
@@ -172,11 +172,11 @@ export class AppComponent implements OnInit, OnDestroy {
       const x = x0 + Math.cos(angle) * i;
       const y = y0 + Math.sin(angle) * i;
       this.context.beginPath();
-      if (this.tool === Tool.Pen) {
+      if (!this.isErasing) {
         this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
         this.context.fillStyle = color;
         this.context.fill();
-      } else if (this.tool === Tool.Eraser) {
+      } else {
         this.context.clearRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth);
       }
     }
