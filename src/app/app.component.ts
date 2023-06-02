@@ -105,14 +105,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   erase(x: number, y: number) {
     const radius = this.eraserSize / 2;
-    const imageData = this.context.getImageData(x - radius, y - radius, this.eraserSize, this.eraserSize);
+    const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {
-      data[i + 3] = 0;
+      const pixelX = (i / 4) % this.canvas.nativeElement.width;
+      const pixelY = Math.floor((i / 4) / this.canvas.nativeElement.width);
+      const distance = Math.sqrt(Math.pow(pixelX - x, 2) + Math.pow(pixelY - y, 2));
+
+      if (distance <= radius) {
+        data[i + 3] = 0; // Setze den Alpha-Kanal jedes Pixels innerhalb des Kreises auf 0, um ihn zu löschen
+      }
     }
 
-    this.context.putImageData(imageData, x - radius, y - radius);
+    this.context.putImageData(imageData, 0, 0);
   }
 
   sendMessage() {
