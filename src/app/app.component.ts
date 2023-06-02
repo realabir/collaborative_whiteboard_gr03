@@ -104,13 +104,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const halfEraserSize = this.eraserSize / 2;
-    const halfLineWidth = this.lineWidth / 2;
-    const xStart = x - halfEraserSize - halfLineWidth;
-    const yStart = y - halfEraserSize - halfLineWidth;
-    const width = this.eraserSize + this.lineWidth;
-    const height = this.eraserSize + this.lineWidth;
-    this.context.clearRect(xStart, yStart, width, height);
+    const radius = this.eraserSize / 2;
+    const imageData = this.context.getImageData(x - radius, y - radius, this.eraserSize, this.eraserSize);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      data[i + 3] = 0;
+    }
+
+    this.context.putImageData(imageData, x - radius, y - radius);
   }
 
   sendMessage() {
