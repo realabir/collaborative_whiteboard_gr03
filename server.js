@@ -75,15 +75,14 @@ io.on('connection', function (socket) {
     });
     socket.on('disconnect', function () {
         console.log("User disconnected: ".concat(socket.id));
-        socket.broadcast.emit('user-disconnected', users[socket.id]);
-        delete users[socket.id];
-        if (users[socket.id]) {
-            var disconnectedUser_1 = users[socket.id];
+        var disconnectedUser = users[socket.id];
+        if (disconnectedUser) {
             delete users[socket.id];
             // Remove the disconnected user from the online users list
-            onlineUsers = onlineUsers.filter(function (user) { return user !== disconnectedUser_1; });
+            onlineUsers = onlineUsers.filter(function (user) { return user !== disconnectedUser; });
             // Send the updated list of online users to all connected clients
             io.emit('online-users', onlineUsers);
+            socket.broadcast.emit('user-disconnected', disconnectedUser);
         }
     });
 });
