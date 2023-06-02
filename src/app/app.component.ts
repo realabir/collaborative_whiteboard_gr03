@@ -135,6 +135,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   clearChat() {
+    this.clearChatMessages();
     this.socket.emit('clear-chat');
   }
 
