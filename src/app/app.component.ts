@@ -105,7 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   erase(x: number, y: number) {
     const radius = this.eraserSize / 2;
-    const stepSize = 1; // Schrittgröße für die Pixel-Schleifen
+    const stepSize = 10; // Schrittgröße für die Pixel-Schleifen
     const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     const data = imageData.data;
 
