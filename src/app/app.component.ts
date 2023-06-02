@@ -108,10 +108,21 @@ export class AppComponent implements OnInit, OnDestroy {
     const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     const data = imageData.data;
 
-    for (let i = 0; i < data.length; i += 4) {
-      const pixelX = (i >> 2) % this.canvas.nativeElement.width;
-      const pixelY = (i >> 2) / this.canvas.nativeElement.width;
-      if (Math.hypot(pixelX - x, pixelY - y) <= radius) data[i + 3] = 0;
+    const width = this.canvas.nativeElement.width;
+    const height = this.canvas.nativeElement.height;
+    const startX = Math.max(0, x - radius);
+    const startY = Math.max(0, y - radius);
+    const endX = Math.min(width, x + radius);
+    const endY = Math.min(height, y + radius);
+
+    for (let pixelY = startY; pixelY < endY; pixelY++) {
+      for (let pixelX = startX; pixelX < endX; pixelX++) {
+        const pixelIndex = (pixelY * width + pixelX) * 4;
+        const [r, g, b, a] = data.slice(pixelIndex, pixelIndex + 4);
+        if (Math.hypot(pixelX - x, pixelY - y) <= radius) {
+          data[pixelIndex + 3] = 0;
+        }
+      }
     }
 
     this.context.putImageData(imageData, 0, 0);
