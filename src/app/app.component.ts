@@ -132,24 +132,25 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
-    if (this.tool === Tool.Pen && this.selectedTool === Tool.Pen) {
-      // Only draw if the local and selected tool is the pen
-      this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
-      this.socket.emit('draw', {
-        x0: this.lastX,
-        y0: this.lastY,
-        x1: currentX,
-        y1: currentY,
-        color: this.color,
-        lineWidth: this.lineWidth
-      });
-    } else if (this.tool === Tool.Eraser && this.selectedTool === Tool.Eraser) {
-      // Only erase if the local and selected tool is the eraser
-      this.erase(currentX, currentY);
-      this.socket.emit('erase', {
-        x: currentX,
-        y: currentY
-      });
+    if (this.tool === this.selectedTool) {
+      // Only perform draw or erase based on the selected tool
+      if (this.tool === Tool.Pen) {
+        this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
+        this.socket.emit('draw', {
+          x0: this.lastX,
+          y0: this.lastY,
+          x1: currentX,
+          y1: currentY,
+          color: this.color,
+          lineWidth: this.lineWidth
+        });
+      } else if (this.tool === Tool.Eraser) {
+        this.erase(currentX, currentY);
+        this.socket.emit('erase', {
+          x: currentX,
+          y: currentY
+        });
+      }
     }
     this.lastX = currentX;
     this.lastY = currentY;
