@@ -105,29 +105,24 @@ export class AppComponent implements OnInit, OnDestroy {
 
   erase(x: number, y: number) {
     const radius = this.eraserSize / 2;
-    const eraseDistance = 2; // zusätzlicher Abstand zwischen den Radiererkreisen
     const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     const data = imageData.data;
     const width = this.canvas.nativeElement.width;
     const height = this.canvas.nativeElement.height;
 
-    for (let pixelY = 0; pixelY < height; pixelY++) {
-      for (let pixelX = 0; pixelX < width; pixelX++) {
+    const stepSize = 0.5; // Kleinere Schrittweite für dichtere Überprüfung
+
+    for (let pixelY = 0; pixelY < height; pixelY += stepSize) {
+      for (let pixelX = 0; pixelX < width; pixelX += stepSize) {
         const pixelIndex = (pixelY * width + pixelX) * 4;
         const distance = Math.hypot(pixelX - x, pixelY - y);
-        if (distance <= radius + eraseDistance) {
-          // Lösche den Pixel, wenn er sich innerhalb des Radius plus des zusätzlichen Abstands befindet
-          data[pixelIndex] = 0; // R-Kanal
-          data[pixelIndex + 1] = 0; // G-Kanal
-          data[pixelIndex + 2] = 0; // B-Kanal
-          data[pixelIndex + 3] = 0; // Alpha-Kanal
+        if (distance <= radius) {
+          data[pixelIndex + 3] = 0;
         }
       }
     }
     this.context.putImageData(imageData, 0, 0);
   }
-
-
 
 
   sendMessage() {
