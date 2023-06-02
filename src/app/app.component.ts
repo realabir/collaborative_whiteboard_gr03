@@ -110,23 +110,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const width = this.canvas.nativeElement.width;
     const height = this.canvas.nativeElement.height;
-    const startX = Math.max(0, x - radius);
-    const startY = Math.max(0, y - radius);
-    const endX = Math.min(width, x + radius);
-    const endY = Math.min(height, y + radius);
 
-    for (let pixelY = startY; pixelY < endY; pixelY++) {
-      for (let pixelX = startX; pixelX < endX; pixelX++) {
-        const pixelIndex = (pixelY * width + pixelX) * 4;
-        const [r, g, b, a] = data.slice(pixelIndex, pixelIndex + 4);
-        if (Math.hypot(pixelX - x, pixelY - y) <= radius) {
-          data[pixelIndex + 3] = 0;
-        }
+    const pixels = [];
+    for (let pixelY = Math.max(0, y - radius); pixelY < Math.min(height, y + radius); pixelY++) {
+      for (let pixelX = Math.max(0, x - radius); pixelX < Math.min(width, x + radius); pixelX++) {
+        pixels.push((pixelY * width + pixelX) * 4 + 3);
       }
     }
 
+    pixels.forEach((pixelIndex) => {
+      data[pixelIndex] = 0;
+    });
+
     this.context.putImageData(imageData, 0, 0);
   }
+
 
   sendMessage() {
     if (this.chatText.trim().length > 0) {
