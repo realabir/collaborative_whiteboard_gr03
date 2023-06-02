@@ -88,7 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('user-disconnected', (userName: string) => {
       console.log(`${userName} disconnected`);
-      this.onlineUsers = this.onlineUsers.filter(user => user !== userName); // Remove the disconnected user from the online users list
+      this.onlineUsers = this.onlineUsers.filter(user => user !== userName);
     });
 
   }

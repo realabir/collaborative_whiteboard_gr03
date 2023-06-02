@@ -90,11 +90,9 @@ io.on('connection', (socket: any) => {
 
   socket.on('disconnect', () => {
     console.log(`User disconnected: ${socket.id}`);
-    socket.broadcast.emit('user-disconnected', users[socket.id]);
-    delete users[socket.id];
+    const disconnectedUser = users[socket.id];
 
-    if (users[socket.id]) {
-      const disconnectedUser = users[socket.id];
+    if (disconnectedUser) {
       delete users[socket.id];
 
       // Remove the disconnected user from the online users list
@@ -102,6 +100,8 @@ io.on('connection', (socket: any) => {
 
       // Send the updated list of online users to all connected clients
       io.emit('online-users', onlineUsers);
+
+      socket.broadcast.emit('user-disconnected', disconnectedUser);
     }
   });
 });
