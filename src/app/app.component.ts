@@ -104,19 +104,17 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const eraseRadius = this.eraserSize / 2;
-    const eraseThreshold = eraseRadius / 2; // Adjust this value to control the distance between eraser circles
-
+    const radius = this.eraserSize;
     const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     const data = imageData.data;
     const width = this.canvas.nativeElement.width;
     const height = this.canvas.nativeElement.height;
 
-    for (let pixelY = 0; pixelY < height; pixelY++) {
-      for (let pixelX = 0; pixelX < width; pixelX++) {
+    for (let pixelY = Math.max(0, y - radius); pixelY < Math.min(height, y + radius); pixelY++) {
+      for (let pixelX = Math.max(0, x - radius); pixelX < Math.min(width, x + radius); pixelX++) {
         const pixelIndex = (pixelY * width + pixelX) * 4;
         const distance = Math.hypot(pixelX - x, pixelY - y);
-        if (distance <= eraseRadius && distance >= eraseThreshold) {
+        if (distance <= radius) {
           data[pixelIndex + 3] = 0;
         }
       }
@@ -124,6 +122,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.context.putImageData(imageData, 0, 0);
   }
+
 
 
   sendMessage() {
