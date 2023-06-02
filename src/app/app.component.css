@@ -149,4 +149,5 @@ input[type="text"] {
 .clear-chat-btn{
   padding: 5px 10px;
   cursor: pointer;
+  margin-left: 50px;
 }
