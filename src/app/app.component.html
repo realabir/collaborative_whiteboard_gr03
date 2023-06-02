@@ -43,6 +43,7 @@
       </div>
       <input type="text" [(ngModel)]="chatText" placeholder="Type your message..." (keydown.enter)="sendMessage()">
       <button id="send" (click)="sendMessage()">Send</button>
+      <button class="clear-chat-btn" (click)="clearChat()">Clear Chat</button>
     </div>
   </div>
 </div>

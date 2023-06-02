@@ -70,6 +70,7 @@ io.on('connection', (socket: any) => {
   socket.on('clear', () => {
     drawings = []; // Clear stored drawings
     texts = []; // Clear stored texts
+    chatMessages = []; // Clear stored chat messages
     socket.broadcast.emit('clear');
   });
 

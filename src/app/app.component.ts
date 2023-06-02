@@ -79,6 +79,10 @@ export class AppComponent implements OnInit, OnDestroy {
       this.clearCanvas();
     });
 
+    this.socket.on('clear-chat', () => {
+      this.clearChatMessages();
+    });
+
     this.socket.on('user-disconnected', (userName: string) => {
       console.log(`${userName} disconnected`);
     });
@@ -128,6 +132,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.socket.emit('chat-message', this.chatText);
       this.chatText = '';
     }
+  }
+
+  clearChat() {
+    this.socket.emit('clear-chat');
+  }
+
+  clearChatMessages() {
+    this.messages = [];
   }
 
   onMouseMove(event: MouseEvent) {
