@@ -16,6 +16,7 @@ var users = {};
 var drawings = []; // Store drawings
 var texts = []; // Store texts
 var chatMessages = []; // Store chat messages
+var onlineUsers = []; // Store online users
 io.on('connection', function (socket) {
     console.log("New user connected: ".concat(socket.id));
     socket.emit('user-id', socket.id);
@@ -37,6 +38,12 @@ io.on('connection', function (socket) {
     socket.on('new-user', function (userName) {
         users[socket.id] = userName;
         socket.broadcast.emit('user-connected', userName);
+        // Send the list of online users to the newly connected user
+        socket.emit('online-users', onlineUsers);
+        // Add the newly connected user to the online users list
+        onlineUsers.push(userName);
+        // Send the updated list of online users to all connected clients
+        io.emit('online-users', onlineUsers);
     });
     socket.on('draw', function (data) {
         drawings.push(data); // Store the drawing
@@ -70,6 +77,14 @@ io.on('connection', function (socket) {
         console.log("User disconnected: ".concat(socket.id));
         socket.broadcast.emit('user-disconnected', users[socket.id]);
         delete users[socket.id];
+        if (users[socket.id]) {
+            var disconnectedUser_1 = users[socket.id];
+            delete users[socket.id];
+            // Remove the disconnected user from the online users list
+            onlineUsers = onlineUsers.filter(function (user) { return user !== disconnectedUser_1; });
+            // Send the updated list of online users to all connected clients
+            io.emit('online-users', onlineUsers);
+        }
     });
 });
 server.listen(process.env['PORT'] || 8080);

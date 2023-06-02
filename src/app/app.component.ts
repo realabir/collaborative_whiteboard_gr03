@@ -36,6 +36,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private textEditing = false;
   public textSize = 20;
 
+  public onlineUsers: string[] = [];
+
   messages: { user: string, chatText: string }[] = [];
 
   ngOnInit() {
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('user-connected', (userName: string) => {
       console.log(`${userName} connected`);
+      this.onlineUsers.push(userName);
     });
 
     this.socket.on('draw', (data) => {
@@ -85,6 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('user-disconnected', (userName: string) => {
       console.log(`${userName} disconnected`);
+      this.onlineUsers = this.onlineUsers.filter(user => user !== userName); // Remove the disconnected user from the online users list
     });
 
   }

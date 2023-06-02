@@ -2,6 +2,12 @@
 <html lang="en">
 <body>
 <div class="container">
+  <div class="users-box">
+    <h2>Online Users:</h2>
+    <ul>
+      <li *ngFor="let user of onlineUsers">{{ user }}</li>
+    </ul>
+  </div>
   <div class="whiteboard">
     <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
     <div class="controls">
