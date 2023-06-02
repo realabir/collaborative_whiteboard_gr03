@@ -28,10 +28,6 @@ io.on('connection', (socket: any) => {
     socket.broadcast.emit('user-connected', userName);
   });
 
-  socket.on('chatText', (data: any) => {
-    socket.broadcast.emit('chatText', data);
-  });
-
   socket.on('draw', (data: any) => {
     socket.broadcast.emit('draw', data);
   });

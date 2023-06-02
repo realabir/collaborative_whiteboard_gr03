@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   canvas!: ElementRef<HTMLCanvasElement>;
 
   public tool: Tool = Tool.Pen;
-
+  private selectedTool = Tool.Pen;
 
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public textSize = 20;
 
   public eraserSize = 50
-  private isErasing = false;
+
 
 
   messages: { user: string, chatText: string }[] = [];
@@ -61,6 +61,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('erase', (data) => {
       this.erase(data.x, data.y);
+    });
+
+    this.socket.on('tool-change', (tool: Tool) => {
+      this.selectedTool = tool;
     });
 
     this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
@@ -95,7 +99,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   setTool(tool: Tool) {
     this.tool = tool;
-    this.isErasing = tool === Tool.Eraser;
+    this.selectedTool = tool; // Update the selected tool locally
+    this.socket.emit('tool-change', tool); // Broadcast the selected tool to other users
   }
 
   sendMessage() {
@@ -127,26 +132,24 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
-    if (this.tool === Tool.Pen) {
-      if (!this.isErasing) {
-        this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
-        this.socket.emit('draw', {
-          x0: this.lastX,
-          y0: this.lastY,
-          x1: currentX,
-          y1: currentY,
-          color: this.color,
-          lineWidth: this.lineWidth
-        });
-      }
-    } else if (this.tool === Tool.Eraser) {
-      if (this.isErasing) {
-        this.erase(currentX, currentY);
-        this.socket.emit('erase', {
-          x: currentX,
-          y: currentY
-        });
-      }
+    if (this.tool === Tool.Pen && this.selectedTool === Tool.Pen) {
+      // Only draw if the local and selected tool is the pen
+      this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
+      this.socket.emit('draw', {
+        x0: this.lastX,
+        y0: this.lastY,
+        x1: currentX,
+        y1: currentY,
+        color: this.color,
+        lineWidth: this.lineWidth
+      });
+    } else if (this.tool === Tool.Eraser && this.selectedTool === Tool.Eraser) {
+      // Only erase if the local and selected tool is the eraser
+      this.erase(currentX, currentY);
+      this.socket.emit('erase', {
+        x: currentX,
+        y: currentY
+      });
     }
     this.lastX = currentX;
     this.lastY = currentY;
@@ -172,11 +175,11 @@ export class AppComponent implements OnInit, OnDestroy {
       const x = x0 + Math.cos(angle) * i;
       const y = y0 + Math.sin(angle) * i;
       this.context.beginPath();
-      if (!this.isErasing) {
+      if (this.tool === Tool.Pen) {
         this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
         this.context.fillStyle = color;
         this.context.fill();
-      } else {
+      } else if (this.tool === Tool.Eraser) {
         this.context.clearRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth);
       }
     }

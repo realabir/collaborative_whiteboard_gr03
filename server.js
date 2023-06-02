@@ -20,9 +20,7 @@ io.on('connection', function (socket) {
         users[socket.id] = userName;
         socket.broadcast.emit('user-connected', userName);
     });
-    socket.on('chatText', function (data) {
-        socket.broadcast.emit('chatText', data);
-    });
+
     socket.on('draw', function (data) {
         socket.broadcast.emit('draw', data);
     });
