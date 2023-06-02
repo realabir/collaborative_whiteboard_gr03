@@ -36,6 +36,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private textEditing = false;
   public textSize = 20;
 
+  public eraserSize = 50;
+
   messages: { user: string, chatText: string }[] = [];
 
   ngOnInit() {
@@ -107,8 +109,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const halfLineWidth = 50
-    this.context.clearRect(x - halfLineWidth, y - halfLineWidth, this.lineWidth, this.lineWidth);
+    const halfEraserSize = this.eraserSize / 2;
+    const halfLineWidth = this.lineWidth / 2;
+    const xStart = x - halfEraserSize - halfLineWidth;
+    const yStart = y - halfEraserSize - halfLineWidth;
+    const width = this.eraserSize + this.lineWidth;
+    const height = this.eraserSize + this.lineWidth;
+    this.context.clearRect(xStart, yStart, width, height);
   }
 
   onMouseMove(event: MouseEvent) {
