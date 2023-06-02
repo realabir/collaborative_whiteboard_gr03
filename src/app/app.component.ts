@@ -18,8 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   canvas!: ElementRef<HTMLCanvasElement>;
 
   public tool: Tool = Tool.Pen;
-  private previousTool: Tool = Tool.Pen;
-  public eraserSize = 50;
+
 
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
@@ -56,13 +55,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
     });
 
-    this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
-      this.messages.push(message);
+    this.socket.on('erase', (data) => {
+      this.erase(data.x, data.y);
     });
 
-    this.socket.on('erase', (data: any) => {
-      const { x, y } = data;
-      this.erase(x, y);
+    this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
+      this.messages.push(message);
     });
 
     this.socket.on('text', (data) => {
@@ -95,15 +93,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.tool = tool;
   }
 
-  erase(x: number, y: number) {
-    if (this.tool === Tool.Eraser) {
-      const halfSize = this.eraserSize / 2;
-      this.context.clearRect(x - halfSize, y - halfSize, this.eraserSize, this.eraserSize);
-      this.socket.emit('erase', {x, y});
-    }
-  }
-
-
   sendMessage() {
     if (this.chatText.trim().length > 0) {
       this.socket.emit('chat-message', this.chatText);
@@ -115,6 +104,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.drawing = true;
     this.lastX = event.clientX - this.canvas.nativeElement.offsetLeft;
     this.lastY = event.clientY - this.canvas.nativeElement.offsetTop;
+  }
+
+  erase(x: number, y: number) {
+    const halfLineWidth = this.lineWidth / 2;
+    this.context.clearRect(x - halfLineWidth, y - halfLineWidth, this.lineWidth, this.lineWidth);
   }
 
   onMouseMove(event: MouseEvent) {
@@ -133,13 +127,15 @@ export class AppComponent implements OnInit, OnDestroy {
         color: this.color,
         lineWidth: this.lineWidth
       });
-    } else if (this.tool === Tool.Eraser && this.previousTool === Tool.Eraser) {
+    } else if (this.tool === Tool.Eraser) {
       this.erase(currentX, currentY);
-      this.socket.emit('erase', { x: currentX, y: currentY });
+      this.socket.emit('erase', {
+        x: currentX,
+        y: currentY
+      });
     }
     this.lastX = currentX;
     this.lastY = currentY;
-    this.previousTool = this.tool;
   }
 
 
@@ -162,11 +158,16 @@ export class AppComponent implements OnInit, OnDestroy {
       const x = x0 + Math.cos(angle) * i;
       const y = y0 + Math.sin(angle) * i;
       this.context.beginPath();
-      this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
-      this.context.fillStyle = color;
-      this.context.fill();
+      if (this.tool === Tool.Pen) {
+        this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
+        this.context.fillStyle = color;
+        this.context.fill();
+      } else if (this.tool === Tool.Eraser) {
+        this.context.clearRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth);
+      }
     }
   }
+
 
   setColor(color: string) {
     this.color = color;
