@@ -29,7 +29,6 @@ io.on('connection', function (socket) {
         var text = texts_1[_a];
         socket.emit('text', text);
     }
-
     // Send existing chat messages to the newly connected user
     for (var _b = 0, chatMessages_1 = chatMessages; _b < chatMessages_1.length; _b++) {
         var message = chatMessages_1[_b];
