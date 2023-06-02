@@ -36,7 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
   private textEditing = false;
   public textSize = 20;
 
-  public eraserSize = 50;
+  public eraserSize = 50
+  private isErasing = false;
+
 
   messages: { user: string, chatText: string }[] = [];
 
@@ -93,6 +95,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   setTool(tool: Tool) {
     this.tool = tool;
+    this.isErasing = tool === Tool.Eraser;
   }
 
   sendMessage() {
@@ -126,20 +129,24 @@ export class AppComponent implements OnInit, OnDestroy {
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
     if (this.tool === Tool.Pen) {
       this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
-      this.socket.emit('draw', {
-        x0: this.lastX,
-        y0: this.lastY,
-        x1: currentX,
-        y1: currentY,
-        color: this.color,
-        lineWidth: this.lineWidth
-      });
+      if (!this.isErasing) {
+        this.socket.emit('draw', {
+          x0: this.lastX,
+          y0: this.lastY,
+          x1: currentX,
+          y1: currentY,
+          color: this.color,
+          lineWidth: this.lineWidth
+        });
+      }
     } else if (this.tool === Tool.Eraser) {
       this.erase(currentX, currentY);
-      this.socket.emit('erase', {
-        x: currentX,
-        y: currentY
-      });
+      if (this.isErasing) {
+        this.socket.emit('erase', {
+          x: currentX,
+          y: currentY
+        });
+      }
     }
     this.lastX = currentX;
     this.lastY = currentY;
