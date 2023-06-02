@@ -123,8 +123,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.context.putImageData(imageData, 0, 0);
   }
 
-
-
   sendMessage() {
     if (this.chatText.trim().length > 0) {
       this.socket.emit('chat-message', this.chatText);

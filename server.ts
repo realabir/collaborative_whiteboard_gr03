@@ -15,13 +15,29 @@ app.get('/*', (req: any, resp: any) =>{
   resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html')
 })
 
-
-
 let users: { [key: string]: string } = {};
+let drawings: any[] = []; // Store drawings
+let texts: any[] = []; // Store texts
+let chatMessages: any[] = []; // Store chat messages
 
 io.on('connection', (socket: any) => {
   console.log(`New user connected: ${socket.id}`);
   socket.emit('user-id', socket.id);
+
+  // Send existing drawings to the newly connected user
+  for (const drawing of drawings) {
+    socket.emit('draw', drawing);
+  }
+
+  // Send existing texts to the newly connected user
+  for (const text of texts) {
+    socket.emit('text', text);
+  }
+
+  // Send existing chat messages to the newly connected user
+  for (const message of chatMessages) {
+    socket.emit('chat-message', message);
+  }
 
   socket.on('new-user', (userName: string) => {
     users[socket.id] = userName;
@@ -29,6 +45,7 @@ io.on('connection', (socket: any) => {
   });
 
   socket.on('draw', (data: any) => {
+    drawings.push(data); // Store the drawing
     socket.broadcast.emit('draw', data);
   });
 
@@ -37,6 +54,7 @@ io.on('connection', (socket: any) => {
   });
 
   socket.on('text', (data: any) => {
+    texts.push(data); // Store the text
     socket.broadcast.emit('text', data);
   });
 
@@ -45,10 +63,13 @@ io.on('connection', (socket: any) => {
       user: users[socket.id],
       chatText: data,
     };
+    chatMessages.push(message); // Store the chat message
     io.emit('chat-message', message);
   });
 
   socket.on('clear', () => {
+    drawings = []; // Clear stored drawings
+    texts = []; // Clear stored texts
     socket.broadcast.emit('clear');
   });
 
@@ -59,4 +80,4 @@ io.on('connection', (socket: any) => {
   });
 });
 
-server.listen( process.env['PORT'] || 8080 );
+server.listen(process.env['PORT'] || 8080);
