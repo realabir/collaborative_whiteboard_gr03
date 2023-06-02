@@ -123,6 +123,7 @@ canvas {
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
+  width: 110%;
 }
 
 #messages {
