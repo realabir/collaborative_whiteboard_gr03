@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   canvas!: ElementRef<HTMLCanvasElement>;
 
   public tool: Tool = Tool.Pen;
-  public eraserSize = 50
+  public eraserSize = 40
 
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
@@ -109,25 +109,19 @@ export class AppComponent implements OnInit, OnDestroy {
     const data = imageData.data;
     const width = this.canvas.nativeElement.width;
     const height = this.canvas.nativeElement.height;
-    const squareRadius = Math.ceil(radius / Math.sqrt(2)); // Calculate the radius of the square region
 
-    const startX = Math.max(0, x - squareRadius); // Calculate the starting X coordinate of the square region
-    const endX = Math.min(width - 1, x + squareRadius); // Calculate the ending X coordinate of the square region
-    const startY = Math.max(0, y - squareRadius); // Calculate the starting Y coordinate of the square region
-    const endY = Math.min(height - 1, y + squareRadius); // Calculate the ending Y coordinate of the square region
-
-    for (let pixelY = startY; pixelY <= endY; pixelY++) {
-      for (let pixelX = startX; pixelX <= endX; pixelX++) {
+    for (let pixelY = Math.max(0, y - radius); pixelY < Math.min(height, y + radius); pixelY++) {
+      for (let pixelX = Math.max(0, x - radius); pixelX < Math.min(width, x + radius); pixelX++) {
         const pixelIndex = (pixelY * width + pixelX) * 4;
         const distance = Math.hypot(pixelX - x, pixelY - y);
         if (distance <= radius) {
-          data[pixelIndex + 3] = 0; // Set alpha channel to 0 for erasing
+          data[pixelIndex + 3] = 0;
         }
       }
     }
+
     this.context.putImageData(imageData, 0, 0);
   }
-
 
 
 
