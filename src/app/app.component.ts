@@ -51,16 +51,8 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log(`${userName} connected`);
     });
 
-    this.socket.on('erase', (data) => {
-      this.erase(data.x, data.y);
-    });
-
     this.socket.on('draw', (data) => {
       this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
-    });
-
-    this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
-      this.messages.push(message);
     });
 
     this.socket.on('text', (data) => {
@@ -74,6 +66,14 @@ export class AppComponent implements OnInit, OnDestroy {
     document.addEventListener('mousemove', (event) => this.onMouseMoveText(event));
     document.addEventListener('keydown', (event) => this.onKeyDown(event));
     document.addEventListener('mouseup', (event) => this.onMouseUp(event));
+
+    this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
+      this.messages.push(message);
+    });
+
+    this.socket.on('erase', (data) => {
+      this.erase(data.x, data.y);
+    });
 
     this.socket.on('clear', () => {
       this.clearCanvas();
@@ -89,6 +89,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
+  draw(x0: number, y0: number, x1: number, y1: number, color: string, lineWidth: number) {
+    const distance = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
+    const angle = Math.atan2(y1 - y0, x1 - x0);
+
+    for (let i = 0; i < distance; i += 5) {
+      const x = x0 + Math.cos(angle) * i;
+      const y = y0 + Math.sin(angle) * i;
+      this.context.beginPath();
+      this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
+      this.context.fillStyle = color;
+      this.context.fill();
+    }
+  }
+
   erase(x: number, y: number) {
     const halfEraserSize = this.eraserSize / 2;
     const halfLineWidth = this.lineWidth / 2;
@@ -99,10 +113,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.context.clearRect(xStart, yStart, width, height);
   }
 
-  setTool(tool: Tool) {
-    this.tool = tool;
-  }
-
   sendMessage() {
     if (this.chatText.trim().length > 0) {
       this.socket.emit('chat-message', this.chatText);
@@ -110,11 +120,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  onMouseDown(event: MouseEvent) {
-    this.drawing = true;
-    this.lastX = event.clientX - this.canvas.nativeElement.offsetLeft;
-    this.lastY = event.clientY - this.canvas.nativeElement.offsetTop;
-  }
 
   onMouseMove(event: MouseEvent) {
     if (!this.drawing) {
@@ -144,47 +149,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   }
 
+  onMouseDown(event: MouseEvent) {
+    this.drawing = true;
+    this.lastX = event.clientX - this.canvas.nativeElement.offsetLeft;
+    this.lastY = event.clientY - this.canvas.nativeElement.offsetTop;
+  }
 
   onMouseUp(event: MouseEvent) {
     if (!this.drawing) {
       return;
     }
     this.drawing = false;
-  }
-
-  clearCanvas() {
-    this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-  }
-
-  draw(x0: number, y0: number, x1: number, y1: number, color: string, lineWidth: number) {
-    const distance = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
-    const angle = Math.atan2(y1 - y0, x1 - x0);
-
-    for (let i = 0; i < distance; i += 5) {
-      const x = x0 + Math.cos(angle) * i;
-      const y = y0 + Math.sin(angle) * i;
-      this.context.beginPath();
-      this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
-      this.context.fillStyle = color;
-      this.context.fill();
-    }
-  }
-
-  setColor(color: string) {
-    this.color = color;
-  }
-
-  setLineWidth(lineWidth: number) {
-    this.lineWidth = lineWidth;
-  }
-
-  setTextSize(textSize: number) {
-    this.textSize = textSize;
-  }
-
-  clear() {
-    this.clearCanvas();
-    this.socket.emit('clear');
   }
 
   onDoubleClick(event: MouseEvent) {
@@ -217,15 +192,14 @@ export class AppComponent implements OnInit, OnDestroy {
           this.text = this.textInput.value;
           document.body.removeChild(this.textInput);
           this.textEditing = false;
-          this.drawText(this.text, this.textX, this.textY);
+          this.writeText(this.text, this.textX, this.textY);
           this.socket.emit('text', { text: this.text, x: this.textX, y: this.textY });
         }
       });
     }
   }
 
-
-  drawText(text: string, x: number, y: number) {
+  writeText(text: string, x: number, y: number) {
     this.context.font = `${this.textSize}px Arial`;
     this.context.fillStyle = this.color;
     this.context.fillText(text, x, y);
@@ -238,12 +212,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  onMouseDownText(event: MouseEvent) {
-    if (this.textEditing && event.target !== this.textInput) {
-      this.finishTextEditing();
-    }
-  }
-
   onMouseMoveText(event: MouseEvent) {
     if (this.textEditing) {
       const rect = this.canvas.nativeElement.getBoundingClientRect();
@@ -251,6 +219,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.textInput.style.top = event.clientY + 'px';
       this.textX = event.clientX - rect.left;
       this.textY = event.clientY - rect.top;
+    }
+  }
+
+  onMouseDownText(event: MouseEvent) {
+    if (this.textEditing && event.target !== this.textInput) {
+      this.finishTextEditing();
     }
   }
 
@@ -274,7 +248,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-
   private finishTextEditing() {
     this.text = this.textInput.value;
     document.body.removeChild(this.textInput);
@@ -288,5 +261,27 @@ export class AppComponent implements OnInit, OnDestroy {
     this.textInput.remove();
     this.textEditing = false;
     this.text = '';
+  }
+
+
+  setTool(tool: Tool) {
+    this.tool = tool;
+  }
+
+  setColor(color: string) {
+    this.color = color;
+  }
+
+  setLineWidth(lineWidth: number) {
+    this.lineWidth = lineWidth;
+  }
+
+  setTextSize(textSize: number) {
+    this.textSize = textSize;
+  }
+
+  clearCanvas() {
+    this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+    this.socket.emit('clear');
   }
 }
