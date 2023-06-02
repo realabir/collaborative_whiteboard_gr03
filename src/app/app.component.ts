@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
   canvas!: ElementRef<HTMLCanvasElement>;
 
   public tool: Tool = Tool.Pen;
-  private selectedTool = Tool.Pen;
+  public eraserSize = 50
 
   private context!: CanvasRenderingContext2D;
   private socket!: Socket;
@@ -36,10 +36,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private textEditing = false;
   public textSize = 20;
 
-  public eraserSize = 50
-
-
-
   messages: { user: string, chatText: string }[] = [];
 
   ngOnInit() {
@@ -55,16 +51,12 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log(`${userName} connected`);
     });
 
-    this.socket.on('draw', (data) => {
-      this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
-    });
-
     this.socket.on('erase', (data) => {
       this.erase(data.x, data.y);
     });
 
-    this.socket.on('tool-change', (tool: Tool) => {
-      this.selectedTool = tool;
+    this.socket.on('draw', (data) => {
+      this.draw(data.x0, data.y0, data.x1, data.y1, data.color, data.lineWidth);
     });
 
     this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
@@ -97,10 +89,18 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
+  erase(x: number, y: number) {
+    const halfEraserSize = this.eraserSize / 2;
+    const halfLineWidth = this.lineWidth / 2;
+    const xStart = x - halfEraserSize - halfLineWidth;
+    const yStart = y - halfEraserSize - halfLineWidth;
+    const width = this.eraserSize + this.lineWidth;
+    const height = this.eraserSize + this.lineWidth;
+    this.context.clearRect(xStart, yStart, width, height);
+  }
+
   setTool(tool: Tool) {
     this.tool = tool;
-    this.selectedTool = tool; // Update the selected tool locally
-    this.socket.emit('tool-change', tool); // Broadcast the selected tool to other users
   }
 
   sendMessage() {
@@ -116,44 +116,32 @@ export class AppComponent implements OnInit, OnDestroy {
     this.lastY = event.clientY - this.canvas.nativeElement.offsetTop;
   }
 
-  erase(x: number, y: number) {
-    const halfEraserSize = this.eraserSize / 2;
-    const halfLineWidth = this.lineWidth / 2;
-    const xStart = x - halfEraserSize - halfLineWidth;
-    const yStart = y - halfEraserSize - halfLineWidth;
-    const width = this.eraserSize + this.lineWidth;
-    const height = this.eraserSize + this.lineWidth;
-    this.context.clearRect(xStart, yStart, width, height);
-  }
-
   onMouseMove(event: MouseEvent) {
     if (!this.drawing) {
       return;
     }
     const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
     const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
-    if (this.tool === this.selectedTool) {
-      // Only perform draw or erase based on the selected tool
-      if (this.tool === Tool.Pen) {
-        this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
-        this.socket.emit('draw', {
-          x0: this.lastX,
-          y0: this.lastY,
-          x1: currentX,
-          y1: currentY,
-          color: this.color,
-          lineWidth: this.lineWidth
-        });
-      } else if (this.tool === Tool.Eraser) {
-        this.erase(currentX, currentY);
-        this.socket.emit('erase', {
-          x: currentX,
-          y: currentY
-        });
-      }
+    if (this.tool === Tool.Pen) {
+      this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
+      this.socket.emit('draw', {
+        x0: this.lastX,
+        y0: this.lastY,
+        x1: currentX,
+        y1: currentY,
+        color: this.color,
+        lineWidth: this.lineWidth
+      });
+    }else if (this.tool === Tool.Eraser) {
+      this.erase(currentX, currentY);
+      this.socket.emit('erase', {
+        x: currentX,
+        y: currentY
+      });
     }
     this.lastX = currentX;
     this.lastY = currentY;
+
   }
 
 
@@ -176,16 +164,11 @@ export class AppComponent implements OnInit, OnDestroy {
       const x = x0 + Math.cos(angle) * i;
       const y = y0 + Math.sin(angle) * i;
       this.context.beginPath();
-      if (this.tool === Tool.Pen) {
-        this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
-        this.context.fillStyle = color;
-        this.context.fill();
-      } else if (this.tool === Tool.Eraser) {
-        this.context.clearRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth);
-      }
+      this.context.arc(x, y, lineWidth / 2, 0, Math.PI * 2);
+      this.context.fillStyle = color;
+      this.context.fill();
     }
   }
-
 
   setColor(color: string) {
     this.color = color;
