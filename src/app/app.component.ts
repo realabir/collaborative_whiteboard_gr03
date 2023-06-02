@@ -96,9 +96,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
+    if (this.tool === Tool.Eraser && this.previousTool === Tool.Eraser) {
       const halfSize = this.eraserSize / 2;
       this.context.clearRect(x - halfSize, y - halfSize, this.eraserSize, this.eraserSize);
       this.socket.emit('erase', {x, y});
+    }
   }
 
 
