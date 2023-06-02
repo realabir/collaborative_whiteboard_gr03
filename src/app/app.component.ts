@@ -107,7 +107,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const halfLineWidth = this.lineWidth / 2;
+    const halfLineWidth = 50
     this.context.clearRect(x - halfLineWidth, y - halfLineWidth, this.lineWidth, this.lineWidth);
   }
 
