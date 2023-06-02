@@ -62,6 +62,10 @@ io.on('connection', function (socket) {
         texts = []; // Clear stored texts
         socket.broadcast.emit('clear');
     });
+    socket.on('clear-chat', function () {
+        chatMessages = []; // Clear stored chat messages
+        socket.broadcast.emit('clear-chat');
+    });
     socket.on('disconnect', function () {
         console.log("User disconnected: ".concat(socket.id));
         socket.broadcast.emit('user-disconnected', users[socket.id]);
