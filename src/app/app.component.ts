@@ -104,7 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const maxDistance = this.eraserSize / 2;
+    const radius = this.eraserSize / 5;
     const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
     const data = imageData.data;
     const width = this.canvas.nativeElement.width;
@@ -114,9 +114,8 @@ export class AppComponent implements OnInit, OnDestroy {
       for (let pixelX = 0; pixelX < width; pixelX++) {
         const pixelIndex = (pixelY * width + pixelX) * 4;
         const distance = Math.hypot(pixelX - x, pixelY - y);
-        const opacity = 1 - distance / maxDistance; // Berechne die Transparenz basierend auf der Entfernung zum Radierpunkt
-        if (opacity > 0) {
-          data[pixelIndex + 3] *= opacity; // Multipliziere den aktuellen Alpha-Kanal mit der Transparenz
+        if (distance <= radius) {
+          data[pixelIndex + 3] = 0;
         }
       }
     }
