@@ -104,11 +104,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   erase(x: number, y: number) {
-    const radius = this.eraserSize / 2;
-    this.context.beginPath();
-    this.context.arc(x, y, radius, 0, 2 * Math.PI);
-    this.context.fillStyle = '#ffffff';
-    this.context.fill();
+    const halfEraserSize = this.eraserSize / 2;
+    const halfLineWidth = this.lineWidth / 2;
+    const xStart = x - halfEraserSize - halfLineWidth;
+    const yStart = y - halfEraserSize - halfLineWidth;
+    const width = this.eraserSize + this.lineWidth;
+    const height = this.eraserSize + this.lineWidth;
+    this.context.clearRect(xStart, yStart, width, height);
   }
 
   sendMessage() {
@@ -117,7 +119,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.chatText = '';
     }
   }
-
 
   onMouseMove(event: MouseEvent) {
     if (!this.drawing) {
@@ -278,8 +279,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.textSize = textSize;
   }
 
+  clear() {
+    this.clearCanvas();
+    this.socket.emit('clear');
+  }
+
   clearCanvas() {
     this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-    this.socket.emit('clear');
   }
 }
