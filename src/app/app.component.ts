@@ -111,8 +111,10 @@ export class AppComponent implements OnInit, OnDestroy {
     const width = this.canvas.nativeElement.width;
     const height = this.canvas.nativeElement.height;
 
-    for (let pixelY = 0; pixelY < height; pixelY++) {
-      for (let pixelX = 0; pixelX < width; pixelX++) {
+    const step = 2; // Schrittweite erhöhen
+
+    for (let pixelY = 0; pixelY < height; pixelY += step) {
+      for (let pixelX = 0; pixelX < width; pixelX += step) {
         const pixelIndex = (pixelY * width + pixelX) * 4;
         const distance = Math.hypot(pixelX - x, pixelY - y);
         if (distance <= radius) {
@@ -123,6 +125,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.context.putImageData(imageData, 0, 0);
   }
+
 
 
   sendMessage() {
