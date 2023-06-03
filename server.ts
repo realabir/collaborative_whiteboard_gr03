@@ -95,4 +95,4 @@ io.on('connection', (socket: any) => {
   });
 });
 
-server.listen(process.env['PORT'] || 8080);
+server.listen(process.env['PORT'] || 3000);
