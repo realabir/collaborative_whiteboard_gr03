@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 
 enum Tool {
@@ -12,7 +12,11 @@ enum Tool {
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
+  ngAfterViewChecked() {
+    this.scrollChatToBottom();
+  }
+
   title = 'collaborative_whiteboard';
   @ViewChild('canvas', { static: true })
   canvas!: ElementRef<HTMLCanvasElement>;
@@ -95,8 +99,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.on('user-disconnected', (userName: string) => {
       console.log(`${userName} disconnected`);
     });
-
-    this.scrollChatToBottom();
   }
 
   ngOnDestroy() {
