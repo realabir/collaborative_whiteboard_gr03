@@ -1,10 +1,13 @@
 .container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   background-color: #f1f1f1;
+}
+
+.canvas-container {
+  position: relative;
 }
 
 .whiteboard {
@@ -150,4 +153,26 @@ input[type="text"] {
   padding: 5px 10px;
   cursor: pointer;
   margin-left: 10px;
+}
+
+.online-users {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.online-users h2 {
+  margin-top: 0;
+}
+
+.online-users ul {
+  list-style: none;
+  padding: 0;
+}
+
+.online-users li {
+  margin-bottom: 5px;
 }
