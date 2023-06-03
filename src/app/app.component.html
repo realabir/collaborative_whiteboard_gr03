@@ -15,7 +15,7 @@
     </div>
     <div class="chat-box">
       <div id="chat">
-        <div id="messages" #messagesRef>
+        <div id="messages">
           <div *ngFor="let message of messages">
             <strong>{{ message.user }}:</strong> {{ message.chatText }}
           </div>
