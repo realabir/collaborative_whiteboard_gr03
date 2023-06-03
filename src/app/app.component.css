@@ -148,12 +148,12 @@ canvas {
 }
 
 #users{
-  max-height: 200px;
+  height: 200px;
   overflow-y: auto;
 }
 
 #messages {
-  max-height: 400px;
+  height: 400px;
   overflow-y: auto;
 }
 

@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('canvas', { static: true })
   canvas!: ElementRef<HTMLCanvasElement>;
 
-  @ViewChild('messages', { static: true })
+  @ViewChild('messagesContainer', { static: true })
   private messagesContainer!: ElementRef<HTMLDivElement>;
 
   public tool: Tool = Tool.Pen;
