@@ -154,6 +154,10 @@ canvas {
   background-color: #fff;
 }
 
+h2{
+  text-align: center;
+}
+
 #users{
   height: 130px;
   overflow-y: auto;
