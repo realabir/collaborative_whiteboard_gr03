@@ -198,6 +198,11 @@ input[type="text"] {
 .online-users-box h2,
 .line-width-picker span,
 .text-size-picker span,
-.tool-picker span {
+.tool-picker span,
+#messages strong,
+#users li,
+.line-width,
+.text-size,
+.tool{
   font-family: Arial, sans-serif;
 }
