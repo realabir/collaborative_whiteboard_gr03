@@ -16,6 +16,7 @@ app.get('/*', (req: any, resp: any) =>{
 })
 
 let users: { [key: string]: string } = {};
+let onlineUsers: { [key: string]: string } = {};
 let drawings: any[] = []; // Store drawings
 let texts: any[] = []; // Store texts
 let chatMessages: any[] = []; // Store chat messages
@@ -41,7 +42,9 @@ io.on('connection', (socket: any) => {
 
   socket.on('new-user', (userName: string) => {
     users[socket.id] = userName;
+    onlineUsers[socket.id] = userName;
     socket.broadcast.emit('user-connected', userName);
+    io.emit('online-users', Object.values(onlineUsers));
   });
 
   socket.on('draw', (data: any) => {
@@ -82,7 +85,9 @@ io.on('connection', (socket: any) => {
     console.log(`User disconnected: ${socket.id}`);
     const disconnectedUser = users[socket.id];
     delete users[socket.id];
+    delete onlineUsers[socket.id];
     socket.broadcast.emit('user-disconnected', disconnectedUser);
+    io.emit('online-users', Object.values(onlineUsers));
   });
 });
 

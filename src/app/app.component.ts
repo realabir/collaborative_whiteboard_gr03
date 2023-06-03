@@ -38,6 +38,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   messages: { user: string, chatText: string }[] = [];
 
+  onlineUsers: string[] = [];
+
   ngOnInit() {
     this.context = this.canvas.nativeElement.getContext('2d')!;
     this.socket = io('https://cwhiteboard-test.herokuapp.com/');
@@ -49,6 +51,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socket.on('user-connected', (userName: string) => {
       console.log(`${userName} connected`);
+    });
+
+    this.socket.on('online-users', (users: string[]) => {
+      this.onlineUsers = users;
     });
 
     this.socket.on('draw', (data) => {
