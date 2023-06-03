@@ -41,10 +41,14 @@ io.on('connection', (socket: any) => {
   }
 
   socket.on('new-user', (userName: string) => {
-    users[socket.id] = userName;
-    onlineUsers[socket.id] = userName;
-    socket.broadcast.emit('user-connected', userName);
-    io.emit('online-users', Object.values(onlineUsers));
+    if (userName && !Object.values(users).includes(userName)) {
+      users[socket.id] = userName;
+      onlineUsers[socket.id] = userName;
+      socket.broadcast.emit('user-connected', userName);
+      io.emit('online-users', Object.values(onlineUsers));
+    } else {
+      socket.emit('invalid-username');
+    }
   });
 
   socket.on('draw', (data: any) => {

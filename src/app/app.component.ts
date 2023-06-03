@@ -62,6 +62,11 @@ export class AppComponent implements OnInit, OnDestroy{
       console.log(`${userName} connected`);
     });
 
+    this.socket.on('invalid-username', () => {
+      const newUserName = prompt('Please enter a valid name:');
+      this.socket.emit('new-user', newUserName);
+    });
+
     this.socket.on('online-users', (users: string[]) => {
       this.onlineUsers = users;
     });

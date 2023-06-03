@@ -36,10 +36,15 @@ io.on('connection', function (socket) {
         socket.emit('chat-message', message);
     }
     socket.on('new-user', function (userName) {
-        users[socket.id] = userName;
-        onlineUsers[socket.id] = userName;
-        socket.broadcast.emit('user-connected', userName);
-        io.emit('online-users', Object.values(onlineUsers));
+        if (userName && !Object.values(users).includes(userName)) {
+            users[socket.id] = userName;
+            onlineUsers[socket.id] = userName;
+            socket.broadcast.emit('user-connected', userName);
+            io.emit('online-users', Object.values(onlineUsers));
+        }
+        else {
+            socket.emit('invalid-username');
+        }
     });
     socket.on('draw', function (data) {
         drawings.push(data); // Store the drawing

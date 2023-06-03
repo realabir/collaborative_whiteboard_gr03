@@ -219,8 +219,12 @@ input[type="text"] {
   border: 1px solid #ccc;
   padding: 20px;
   text-align: center;
+  width: 350px
 }
 
-.clearconf-button{
+.clearconf-button-yes{
+  margin-right: 40px;
+}
+.clearconf-button-no{
   margin-right: 40px;
 }
