@@ -1,15 +1,15 @@
 <div class="container">
   <div class="sidebar">
-    <div class = "online-users-box">
+    <div class="online-users-box">
       <div id="online">
-        <div class="Header">
+        <div class="header">
           <h2>User Online: {{ onlineUsers.length }}</h2>
         </div>
-      <div id ="users">
-        <ul>
-      <div *ngFor="let user of onlineUsers" class="online-user">{{ user }}</div>
-        </ul>
-      </div>
+        <div id="users">
+          <ul>
+            <li *ngFor="let user of onlineUsers" class="online-user">{{ user }}</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="chat-box">

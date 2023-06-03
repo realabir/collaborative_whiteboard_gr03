@@ -1,11 +1,11 @@
 .container {
   display: flex;
+  flex-wrap: wrap;
   height: 100vh;
   background-color: #f1f1f1;
 }
 
 .sidebar {
-  height: 872px;
   width: 300px;
   background-color: #f1f1f1;
   padding: 20px;
@@ -18,13 +18,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 20px;
+  margin: 20px;
 }
 
 canvas {
   border: 1px solid #ccc;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  height: auto;
 }
 
 .controls {
@@ -32,13 +34,18 @@ canvas {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 
-.color-picker {
+.color-picker,
+.line-width-picker,
+.text-size-picker,
+.tool-picker {
   display: flex;
   align-items: center;
   margin-right: 10px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .color {
@@ -54,59 +61,8 @@ canvas {
   border: 2px solid #000;
 }
 
-.line-width-picker {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.line-width {
-  margin-right: 5px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.line-width.selected {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-
-.text-size-picker {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.text-size {
-  margin-right: 5px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.text-size.selected {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.clear-button {
-  margin-left: 1186px;
-  margin-top: -21px;
-}
-
-.tool-picker {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-  font-weight: bold;
-}
-
+.line-width,
+.text-size,
 .tool {
   margin-right: 5px;
   border: none;
@@ -115,20 +71,21 @@ canvas {
   cursor: pointer;
 }
 
+.line-width.selected,
+.text-size.selected,
 .tool.selected {
   font-weight: bold;
   text-decoration: underline;
 }
 
-
 .chat-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 }
 
 #chat {
-  margin-top: 10%;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
@@ -136,20 +93,19 @@ canvas {
   width: 300px;
 }
 
-
 .online-users-box {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 }
 
-.header{
+.header {
   display: flex;
   align-items: center;
 }
 
 #online {
-  height: 200px;
   width: 300px;
   margin-top: -5px;
   border: 1px solid #ccc;
@@ -158,13 +114,13 @@ canvas {
   background-color: #fff;
 }
 
-h2{
+h2 {
   text-align: center;
   margin-top: 5px;
   margin-bottom: 10px;
 }
 
-#users{
+#users {
   height: 150px;
   overflow-y: auto;
   border: 1px solid #ccc;
@@ -191,10 +147,10 @@ input[type="text"] {
   margin-top: 10px;
 }
 
-.clear-chat-btn{
+.clear-chat-btn {
   padding: 5px 10px;
   cursor: pointer;
-  margin-left: 157px;
+  margin-left: auto;
 }
 
 .online-users-box h2,
@@ -207,11 +163,11 @@ input[type="text"] {
 .line-width,
 .text-size,
 .tool,
-.confirmation-dialog p{
+.confirmation-dialog p {
   font-family: Arial, sans-serif;
 }
 
-.confirmation-dialog{
+.confirmation-dialog {
   font-weight: bold;
   position: absolute;
   top: 42%;
@@ -220,7 +176,7 @@ input[type="text"] {
   border: 1px solid #ccc;
   padding: 20px;
   text-align: center;
-  width: 360px
+  width: 360px;
 }
 
 .confirm-yes {
@@ -234,11 +190,15 @@ input[type="text"] {
 .online-user:before {
   content: '';
   position: absolute;
-  left: -11px; /* Adjust the positioning of the bullet point */
+  left: -11px;
   top: 50%;
   transform: translateY(-50%);
-  width: 6px; /* Adjust the size of the bullet point */
-  height: 6px; /* Adjust the size of the bullet point */
+  width: 6px;
+  height: 6px;
   background-color: #87d82e;
   border-radius: 50%;
+}
+
+.confirmation-dialog p {
+  margin: 0;
 }
