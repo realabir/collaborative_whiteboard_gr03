@@ -132,12 +132,11 @@ canvas {
   width: 105%;
 }
 
-/*
+
 .online-users-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 73%;
 }
 
 #online {
@@ -147,8 +146,6 @@ canvas {
   border-radius: 5px;
   background-color: #fff;
 }
-
- */
 
 #messages {
   max-height: 200px;
