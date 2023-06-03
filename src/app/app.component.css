@@ -222,9 +222,6 @@ input[type="text"] {
   width: 350px
 }
 
-.clearconf-button-yes{
-  margin-right: 40px;
-}
-.clearconf-button-no{
+.confirm-yes {
   margin-right: 40px;
 }

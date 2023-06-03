@@ -63,8 +63,12 @@ export class AppComponent implements OnInit, OnDestroy{
     });
 
     this.socket.on('invalid-username', () => {
-      const newUserName = prompt('Please enter a valid name:');
-      this.socket.emit('new-user', newUserName);
+      const newUserName = prompt('This username is already taken. Please enter a valid username:');
+      if (newUserName) {
+        this.socket.emit('new-user', newUserName);
+      } else {
+        this.showInvalidUsernameMessage();
+      }
     });
 
     this.socket.on('online-users', (users: string[]) => {
@@ -111,6 +115,10 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnDestroy() {
     this.socket.disconnect();
+  }
+
+  showInvalidUsernameMessage() {
+    alert('Invalid username! Please enter a valid username:');
   }
 
   draw(x0: number, y0: number, x1: number, y1: number, color: string, lineWidth: number) {
