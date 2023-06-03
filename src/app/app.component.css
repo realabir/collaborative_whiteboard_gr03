@@ -74,7 +74,6 @@ canvas {
   text-decoration: underline;
 }
 
-
 .text-size-picker {
   display: flex;
   align-items: center;
@@ -120,7 +119,6 @@ canvas {
   text-decoration: underline;
 }
 
-
 .chat-box {
   display: flex;
   flex-direction: column;
@@ -136,14 +134,13 @@ canvas {
   width: 300px;
 }
 
-
 .online-users-box {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.header{
+.header {
   display: flex;
   align-items: center;
 }
@@ -158,13 +155,13 @@ canvas {
   background-color: #fff;
 }
 
-h2{
+h2 {
   text-align: center;
   margin-top: 5px;
   margin-bottom: 10px;
 }
 
-#users{
+#users {
   height: 150px;
   overflow-y: auto;
   border: 1px solid #ccc;
@@ -191,7 +188,7 @@ input[type="text"] {
   margin-top: 10px;
 }
 
-.clear-chat-btn{
+.clear-chat-btn {
   padding: 5px 10px;
   cursor: pointer;
   margin-left: 157px;
@@ -207,11 +204,11 @@ input[type="text"] {
 .line-width,
 .text-size,
 .tool,
-.confirmation-dialog p{
+.confirmation-dialog p {
   font-family: Arial, sans-serif;
 }
 
-.confirmation-dialog{
+.confirmation-dialog {
   font-weight: bold;
   position: absolute;
   top: 42%;
@@ -220,7 +217,7 @@ input[type="text"] {
   border: 1px solid #ccc;
   padding: 20px;
   text-align: center;
-  width: 360px
+  width: 360px;
 }
 
 .confirm-yes {
@@ -232,7 +229,7 @@ input[type="text"] {
 }
 
 .online-user:before {
-  content: '';
+  content: "";
   position: absolute;
   left: -11px; /* Adjust the positioning of the bullet point */
   top: 50%;
@@ -251,11 +248,47 @@ input[type="text"] {
   .sidebar {
     height: auto;
     width: 100%;
+    padding: 10px; /* Updated padding value */
   }
 
   .whiteboard {
     margin-left: 0;
     margin-top: 20px;
+    align-items: flex-start; /* Added align-items property */
+  }
+
+  canvas {
+    width: 100%;
+    height: 300px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0;
+  }
+
+  .clear-button {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .chat-box {
+    align-items: flex-start;
+  }
+
+  #chat {
+    width: 100%;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .clear-chat-btn {
+    margin-left: 0;
+    margin-top: 10px;
   }
 }
 
