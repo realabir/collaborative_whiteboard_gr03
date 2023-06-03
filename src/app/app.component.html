@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="whiteboard">
-    <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
+    <canvas #canvas width="1280" height="720" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
     <div class="controls">
       <div class="color-picker">
         <button [class.selected]="color === '#000000'" class="color" style="background-color: black" (click)="setColor('#000000')"></button>

@@ -1,5 +1,5 @@
 html{
-  background: #f1f1f1;
+  background-color: #f1f1f1;
 }
 
 .container {
@@ -133,7 +133,7 @@ canvas {
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
-  width: 105%;
+  width: 300px;
 }
 
 
@@ -171,7 +171,7 @@ h2{
 }
 
 #messages {
-  height: 323px;
+  height: 540px;
   overflow-y: auto;
 }
 
@@ -182,7 +182,7 @@ h2{
 input[type="text"] {
   margin-right: 10px;
   padding: 5px;
-  width: 300px;
+  width: 286px;
 }
 
 #send {
@@ -194,5 +194,5 @@ input[type="text"] {
 .clear-chat-btn{
   padding: 5px 10px;
   cursor: pointer;
-  margin-left: 172px;
+  margin-left: 157px;
 }
