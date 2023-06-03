@@ -24,6 +24,13 @@
         <button class="clear-chat-btn" (click)="clearChat()">Clear Chat</button>
       </div>
     </div>
+    <div *ngIf="showConfirmation" class="confirmation-dialog">
+      <div class="message">Are you sure you want to clear?</div>
+      <div class="buttons">
+        <button (click)="confirmClear()">Yes</button>
+        <button (click)="cancelClear()">No</button>
+      </div>
+    </div>
   </div>
   <div class="whiteboard">
     <canvas #canvas width="1280" height="720" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>

@@ -44,7 +44,11 @@ export class AppComponent implements OnInit, OnDestroy{
 
   onlineUsers: string[] = [];
 
+  showConfirmation = false;
+
   ngOnInit() {
+    this.showConfirmation = false;
+
     this.context = this.canvas.nativeElement.getContext('2d')!;
     this.socket = io('https://cwhiteboard-test.herokuapp.com/');
 
@@ -148,15 +152,6 @@ export class AppComponent implements OnInit, OnDestroy{
     setTimeout(() => {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     }, 0);
-  }
-
-  clearChat() {
-    this.clearChatMessages();
-    this.socket.emit('clear-chat');
-  }
-
-  clearChatMessages() {
-    this.messages = [];
   }
 
   onMouseMove(event: MouseEvent) {
@@ -318,12 +313,38 @@ export class AppComponent implements OnInit, OnDestroy{
     this.textSize = textSize;
   }
 
+  clearChat() {
+    this.showConfirmationDialog();
+  }
+
+  clearChatMessages() {
+    this.messages = [];
+  }
+
   clear() {
+    this.showConfirmationDialog();
+  }
+
+  clearCanvas() {
+    this.context.clearRect(
+      0,
+      0,
+      this.canvas.nativeElement.width,
+      this.canvas.nativeElement.height
+    );
+  }
+
+  showConfirmationDialog() {
+    this.showConfirmation = true;
+  }
+
+  confirmClear() {
+    this.showConfirmation = false;
     this.clearCanvas();
     this.socket.emit('clear');
   }
 
-  clearCanvas() {
-    this.context.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+  cancelClear() {
+    this.showConfirmation = false;
   }
 }
