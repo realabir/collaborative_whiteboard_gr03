@@ -1,4 +1,4 @@
-html{
+body{
   background-color: #f1f1f1;
 }
 
@@ -26,6 +26,7 @@ html{
 
 canvas {
   border: 1px solid #ccc;
+  background-color: white;
 }
 
 .controls {
