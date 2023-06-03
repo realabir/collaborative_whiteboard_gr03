@@ -7,10 +7,6 @@
   background-color: #f1f1f1;
 }
 
-.online-users {
-  margin-right: 20px;
-}
-
 .whiteboard {
   display: flex;
   flex-direction: column;
@@ -122,6 +118,21 @@ canvas {
 }
 
 #chat {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 105%;
+}
+
+.online-users-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#online {
   margin-top: 20px;
   border: 1px solid #ccc;
   padding: 10px;
