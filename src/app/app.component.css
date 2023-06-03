@@ -243,105 +243,62 @@ input[type="text"] {
   border-radius: 50%;
 }
 
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .container {
     flex-direction: column;
   }
 
   .sidebar {
+    height: auto;
     width: 100%;
-    margin-bottom: 20px;
   }
 
   .whiteboard {
     margin-left: 0;
-  }
-
-  .controls {
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  .clear-button {
-    margin-left: 0;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  .sidebar {
-    padding: 10px;
-  }
-
-  .whiteboard {
-    padding: 10px;
-  }
-
-  canvas {
-    margin-bottom: 10px;
-  }
-
-  .controls {
-    flex-direction: column;
-  }
-
-  .color-picker,
-  .line-width-picker,
-  .text-size-picker,
-  .tool-picker {
-    margin-right: 0;
-    margin-bottom: 5px;
-  }
-
-  .clear-button {
-    margin-top: 5px;
-  }
-
-  .chat-box {
     margin-top: 20px;
   }
 }
 
-.confirmation-dialog {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-
-@media screen and (min-width: 600px) {
-  .container {
-    flex-direction: row;
-  }
-
+@media screen and (max-width: 480px) {
   .sidebar {
-    height: 100%;
-    width: 300px;
-    margin-right: 20px;
+    padding: 10px;
   }
 
   .whiteboard {
-    margin-left: 20px;
+    align-items: flex-start;
   }
 
-  .content {
+  canvas {
+    width: 100%;
+    height: 300px;
+  }
+
+  .controls {
+    flex-direction: column;
     align-items: flex-start;
+    margin-top: 0;
+  }
+
+  .clear-button {
+    margin-left: 0;
+    margin-top: 10px;
   }
 
   .chat-box {
     align-items: flex-start;
   }
-}
 
-@media screen and (max-height: 600px) {
-  .container {
-    height: 100%;
+  #chat {
+    width: 100%;
   }
 
-  .sidebar {
-    overflow-y: auto;
+  input[type="text"] {
+    width: 100%;
+    margin-right: 0;
   }
 
-  .whiteboard {
-    overflow-y: auto;
+  .clear-chat-btn {
+    margin-left: 0;
+    margin-top: 10px;
   }
 }
