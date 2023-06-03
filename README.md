@@ -1,4 +1,4 @@
-# CollaborativeWhiteboard
+# Collaborative Whiteboard
 
 Link: https://collaborative-whiteboard-gr03.herokuapp.com/
 
