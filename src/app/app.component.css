@@ -242,3 +242,41 @@ input[type="text"] {
   background-color: #87d82e;
   border-radius: 50%;
 }
+
+@media screen and (min-width: 600px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    height: 100%;
+    width: 300px;
+    margin-right: 20px;
+  }
+
+  .whiteboard {
+    margin-left: 20px;
+  }
+
+  .content {
+    align-items: flex-start;
+  }
+
+  .chat-box {
+    align-items: flex-start;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .container {
+    height: 100%;
+  }
+
+  .sidebar {
+    overflow-y: auto;
+  }
+
+  .whiteboard {
+    overflow-y: auto;
+  }
+}
