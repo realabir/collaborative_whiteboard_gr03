@@ -7,7 +7,9 @@
       <div id="online">
     <h2>Online Users</h2>
       <div id ="users">
-        <div *ngFor="let user of onlineUsers">{{ user }}</div>
+        <ul>
+      <li *ngFor="let user of onlineUsers">{{ user }}</li>
+        </ul>
       </div>
       </div>
     </div>
