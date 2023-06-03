@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
+<div class="online-users">
+  <h2>Online Users</h2>
+  <ul>
+    <li *ngFor="let user of onlineUsers">{{ user }}</li>
+  </ul>
+</div>
 <div class="container">
-  <div class="online-users">
-    <h2>Online Users</h2>
-    <ul>
-      <li *ngFor="let user of onlineUsers">{{ user }}</li>
-    </ul>
-  </div>
   <div class="whiteboard">
-    <div class="canvas-container">
     <canvas #canvas width="800" height="600" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
     <div class="controls">
       <div class="color-picker">
@@ -40,7 +39,6 @@
         <button (click)="clear()">Clear</button>
       </div>
     </div>
-  </div>
   </div>
   <div class="chat-box">
     <div id="chat">
