@@ -82,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.socket.on('chat-message', (message: { user: string, chatText: string }) => {
       this.messages.push(message);
+      this.scrollChatToBottom();
     });
 
     this.socket.on('erase', (data) => {
@@ -143,8 +144,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.chatText.trim().length > 0) {
       this.socket.emit('chat-message', this.chatText);
       this.chatText = '';
-
-      this.scrollChatToBottom();
     }
   }
 
