@@ -1,17 +1,23 @@
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
   background-color: #f1f1f1;
 }
 
+.sidebar {
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .whiteboard {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-left: 20px;
 }
 
 canvas {
@@ -110,7 +116,7 @@ canvas {
   text-decoration: underline;
 }
 
-
+/*
 .chat-box {
   display: flex;
   flex-direction: column;
@@ -125,6 +131,8 @@ canvas {
   background-color: #fff;
   width: 105%;
 }
+
+ */
 
 .online-users-box {
   display: flex;
