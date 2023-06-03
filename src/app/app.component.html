@@ -57,14 +57,14 @@
       <button class="clear-canvas-btn" (click)="showConfirmationDialog('canvas')">Clear Canvas</button>
     </div>
   </div>
-  <div *ngIf="showConfirmation && confirmType === 'canvas'" class="confirmation-dialog">
-    <p>Are you sure you want to CLEAR the CANVAS?</p>
-    <button (click)="confirmClearCanvas()">Yes</button>
-    <button (click)="cancelClear()">No</button>
-  </div>
-  <div *ngIf="showConfirmation && confirmType === 'chat'" class="confirmation-dialog">
-    <p>Are you sure you want to CLEAR the CHAT?</p>
-    <button (click)="confirmClearChat()">Yes</button>
-    <button (click)="cancelClear()">No</button>
-  </div>
+</div>
+<div *ngIf="showConfirmation && confirmType === 'canvas'" class="confirmation-dialog">
+  <p>Are you sure you want to CLEAR the CANVAS?</p>
+  <button (click)="confirmClearCanvas()">Yes</button>
+  <button (click)="cancelClear()">No</button>
+</div>
+<div *ngIf="showConfirmation && confirmType === 'chat'" class="confirmation-dialog">
+  <p>Are you sure you want to CLEAR the CHAT?</p>
+  <button (click)="confirmClearChat()">Yes</button>
+  <button (click)="cancelClear()">No</button>
 </div>
