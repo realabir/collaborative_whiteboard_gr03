@@ -15,8 +15,8 @@
     </div>
     <div class="chat-box">
       <div id="chat">
-        <div id="messages">
-          <div *ngFor="let message of messages.slice().reverse()">
+        <div id="messages" #messagesRef>
+          <div *ngFor="let message of messages">
             <strong>{{ message.user }}:</strong> {{ message.chatText }}
           </div>
         </div>

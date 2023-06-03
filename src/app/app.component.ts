@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 
 enum Tool {
@@ -12,10 +12,13 @@ enum Tool {
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   title = 'collaborative_whiteboard';
   @ViewChild('canvas', { static: true })
   canvas!: ElementRef<HTMLCanvasElement>;
+
+  @ViewChild('messagesRef', { static: false })
+  private messagesRef!: ElementRef<HTMLDivElement>;
 
   public tool: Tool = Tool.Pen;
   public eraserSize = 40
@@ -99,6 +102,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
+  ngAfterViewInit() {
+
+    setTimeout(() => {
+      this.messagesRef.nativeElement.scrollTop = this.messagesRef.nativeElement.scrollHeight;
+    });
+  }
+
   draw(x0: number, y0: number, x1: number, y1: number, color: string, lineWidth: number) {
     const distance = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
     const angle = Math.atan2(y1 - y0, x1 - x0);
@@ -137,6 +147,10 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.chatText.trim().length > 0) {
       this.socket.emit('chat-message', this.chatText);
       this.chatText = '';
+
+      setTimeout(() => {
+        this.messagesRef.nativeElement.scrollTop = this.messagesRef.nativeElement.scrollHeight;
+      });
     }
   }
 
