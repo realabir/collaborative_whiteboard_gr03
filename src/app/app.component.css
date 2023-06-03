@@ -308,18 +308,23 @@ input[type="text"] {
 }
 
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .container {
     flex-direction: column;
   }
 
   .sidebar {
-    flex: 1 0 auto;
-    margin-bottom: 20px;
+    width: 100%;
+    height: auto;
   }
 
   .whiteboard {
-    flex: 1;
     margin-left: 0;
+    margin-top: 20px;
+  }
+
+  .clear-button {
+    margin-left: 0;
+    margin-top: 10px;
   }
 }
