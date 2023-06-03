@@ -5,14 +5,15 @@
 }
 
 .sidebar {
-  flex: 0 0 300px;
+  height: 872px;
+  width: 300px;
   background-color: #f1f1f1;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .whiteboard {
-  flex: 1;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +22,6 @@
 }
 
 canvas {
-  max-width: 100%;
   border: 1px solid #ccc;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -34,10 +34,7 @@ canvas {
   margin-top: 10px;
 }
 
-.color-picker,
-.line-width-picker,
-.text-size-picker,
-.tool-picker {
+.color-picker {
   display: flex;
   align-items: center;
   margin-right: 10px;
@@ -57,9 +54,14 @@ canvas {
   border: 2px solid #000;
 }
 
-.line-width,
-.text-size,
-.tool {
+.line-width-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.line-width {
   margin-right: 5px;
   border: none;
   outline: none;
@@ -72,21 +74,57 @@ canvas {
   text-decoration: underline;
 }
 
+
+.text-size-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.text-size {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .text-size.selected {
   font-weight: bold;
   text-decoration: underline;
 }
 
 .clear-button {
-  margin-top: 10px;
-  text-align: center;
+  margin-left: 1186px;
+  margin-top: -21px;
 }
+
+.tool-picker {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.tool {
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.tool.selected {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 
 .chat-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
 }
 
 #chat {
@@ -95,8 +133,9 @@ canvas {
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
-  width: 100%;
+  width: 300px;
 }
+
 
 .online-users-box {
   display: flex;
@@ -104,38 +143,36 @@ canvas {
   align-items: center;
 }
 
-.header {
+.header{
   display: flex;
   align-items: center;
 }
 
 #online {
   height: 200px;
+  width: 300px;
   margin-top: -5px;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
-  width: 100%;
 }
 
-h2 {
+h2{
   text-align: center;
   margin-top: 5px;
   margin-bottom: 10px;
 }
 
-#users {
+#users{
   height: 150px;
   overflow-y: auto;
   border: 1px solid #ccc;
-  width: 100%;
 }
 
 #messages {
   height: 540px;
   overflow-y: auto;
-  width: 100%;
 }
 
 #messages div {
@@ -145,7 +182,7 @@ h2 {
 input[type="text"] {
   margin-right: 10px;
   padding: 5px;
-  width: 100%;
+  width: 286px;
 }
 
 #send {
@@ -154,10 +191,10 @@ input[type="text"] {
   margin-top: 10px;
 }
 
-.clear-chat-btn {
+.clear-chat-btn{
   padding: 5px 10px;
   cursor: pointer;
-  margin-left: auto;
+  margin-left: 157px;
 }
 
 .online-users-box h2,
@@ -170,11 +207,11 @@ input[type="text"] {
 .line-width,
 .text-size,
 .tool,
-.confirmation-dialog p {
+.confirmation-dialog p{
   font-family: Arial, sans-serif;
 }
 
-.confirmation-dialog {
+.confirmation-dialog{
   font-weight: bold;
   position: absolute;
   top: 42%;
@@ -183,7 +220,7 @@ input[type="text"] {
   border: 1px solid #ccc;
   padding: 20px;
   text-align: center;
-  width: 360px;
+  width: 360px
 }
 
 .confirm-yes {
@@ -206,7 +243,71 @@ input[type="text"] {
   border-radius: 50%;
 }
 
-/* Additional CSS */
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .whiteboard {
+    margin-left: 0;
+  }
+
+  .controls {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .clear-button {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .sidebar {
+    padding: 10px;
+  }
+
+  .whiteboard {
+    padding: 10px;
+  }
+
+  canvas {
+    margin-bottom: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .color-picker,
+  .line-width-picker,
+  .text-size-picker,
+  .tool-picker {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .clear-button {
+    margin-top: 5px;
+  }
+
+  .chat-box {
+    margin-top: 20px;
+  }
+}
+
+.confirmation-dialog {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
