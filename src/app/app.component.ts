@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 
 enum Tool {
@@ -12,10 +12,7 @@ enum Tool {
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
-  ngAfterViewChecked() {
-    this.scrollChatToBottom();
-  }
+export class AppComponent implements OnInit, OnDestroy{
 
   title = 'collaborative_whiteboard';
   @ViewChild('canvas', { static: true })
