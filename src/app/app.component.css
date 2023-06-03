@@ -225,3 +225,19 @@ input[type="text"] {
 .confirm-yes {
   margin-right: 40px;
 }
+
+.online-user {
+  position: relative;
+}
+
+.online-user:before {
+  content: '';
+  position: absolute;
+  left: -10px; /* Adjust the positioning of the bullet point */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px; /* Adjust the size of the bullet point */
+  height: 6px; /* Adjust the size of the bullet point */
+  background-color: yellow;
+  border-radius: 50%;
+}

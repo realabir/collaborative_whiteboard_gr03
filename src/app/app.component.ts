@@ -55,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);
-      this.socket.emit('new-user', prompt('Please enter your name:'));
+      this.socket.emit('new-user', prompt('Please enter your username:'));
     });
 
     this.socket.on('user-connected', (userName: string) => {
