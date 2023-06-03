@@ -213,7 +213,7 @@ input[type="text"] {
 
 .confirmation-dialog{
   position: absolute;
-  top: 50%;
+  top: 42%;
   left: 50%;
   background-color: #f1f1f1;
   border: 1px solid #ccc;
