@@ -124,7 +124,7 @@ canvas {
 }
 
 #chat {
-  margin-top: 20px;
+  margin-top: 160%;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
@@ -147,8 +147,13 @@ canvas {
   background-color: #fff;
 }
 
-#messages {
+#users{
   max-height: 200px;
+  overflow-y: auto;
+}
+
+#messages {
+  max-height: 400px;
   overflow-y: auto;
 }
 
