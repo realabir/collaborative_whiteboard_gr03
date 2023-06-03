@@ -340,6 +340,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   confirmClear() {
     this.showConfirmation = false;
+    this.clearChatMessages();
     this.clearCanvas();
     this.socket.emit('clear');
   }
