@@ -32,11 +32,11 @@
     <canvas #canvas width="1280" height="720" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)"></canvas>
     <div class="controls">
       <div class="color-picker">
-        <button [class.selected]="color === '#000000'" class="color" style="background-color: black" (click)="setColor('#000000')"></button>
-        <button [class.selected]="color === '#ff0000'" class="color" style="background-color: red" (click)="setColor('#ff0000')"></button>
-        <button [class.selected]="color === '#00ff00'" class="color" style="background-color: green" (click)="setColor('#00ff00')"></button>
-        <button [class.selected]="color === '#0000ff'" class="color" style="background-color: blue" (click)="setColor('#0000ff')"></button>
-        <button [class.selected]="color === '#ffff00'" class="color" style="background-color: yellow" (click)="setColor('#ffff00')"></button>
+        <button [class.selected]="color === 'black'" class="color" style="background-color: black" (click)="setColor('black')"></button>
+        <button [class.selected]="color === 'red'" class="color" style="background-color: red" (click)="setColor('red')"></button>
+        <button [class.selected]="color === 'green'" class="color" style="background-color: green" (click)="setColor('green')"></button>
+        <button [class.selected]="color === 'blue'" class="color" style="background-color: blue" (click)="setColor('blue')"></button>
+        <button [class.selected]="color === 'yellow'" class="color" style="background-color: yellow" (click)="setColor('yellow')"></button>
       </div>
       <div class="line-width-picker">
         <span>Line Width:</span>
