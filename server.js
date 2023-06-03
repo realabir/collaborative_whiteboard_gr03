@@ -13,6 +13,7 @@ app.get('/*', function (req, resp) {
     resp.sendFile(__dirname + '/dist/collaborative-whiteboard/index.html');
 });
 var users = {};
+var onlineUsers = {};
 var drawings = []; // Store drawings
 var texts = []; // Store texts
 var chatMessages = []; // Store chat messages
@@ -36,7 +37,9 @@ io.on('connection', function (socket) {
     }
     socket.on('new-user', function (userName) {
         users[socket.id] = userName;
+        onlineUsers[socket.id] = userName;
         socket.broadcast.emit('user-connected', userName);
+        io.emit('online-users', Object.values(onlineUsers));
     });
     socket.on('draw', function (data) {
         drawings.push(data); // Store the drawing
@@ -70,7 +73,9 @@ io.on('connection', function (socket) {
         console.log("User disconnected: ".concat(socket.id));
         var disconnectedUser = users[socket.id];
         delete users[socket.id];
+        delete onlineUsers[socket.id];
         socket.broadcast.emit('user-disconnected', disconnectedUser);
+        io.emit('online-users', Object.values(onlineUsers));
     });
 });
 server.listen(process.env['PORT'] || 8080);
