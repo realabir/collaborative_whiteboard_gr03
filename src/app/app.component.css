@@ -156,10 +156,12 @@ canvas {
 
 h2{
   text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 #users{
-  height: 130px;
+  height: 150px;
   overflow-y: auto;
   border: 1px solid #ccc;
 }
