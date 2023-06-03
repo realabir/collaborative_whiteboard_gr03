@@ -5,6 +5,7 @@
 }
 
 .sidebar {
+  height: 895px;
   width: 300px;
   background-color: #f1f1f1;
   padding: 20px;
@@ -148,7 +149,7 @@ canvas {
 #online {
   height: 200px;
   width: 300px;
-  margin-top: 20px;
+  margin-top: -5px;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
