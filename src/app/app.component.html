@@ -21,14 +21,12 @@
         </div>
         <input type="text" [(ngModel)]="chatText" placeholder="Type your message..." (keydown.enter)="sendMessage()">
         <button id="send" (click)="sendMessage()">Send</button>
-        <button class="clear-chat-btn" (click)="clearChat()">Clear Chat</button>
-      </div>
-    </div>
-    <div *ngIf="showConfirmation" class="confirmation-dialog">
-      <div class="message">Are you sure you want to clear?</div>
-      <div class="buttons">
-        <button (click)="confirmClear()">Yes</button>
-        <button (click)="cancelClear()">No</button>
+        <button class="clear-chat-btn" (click)="showConfirmationDialog('chat')">Clear Chat</button>
+        <div *ngIf="showConfirmation && confirmType === 'chat'" class="confirmation-dialog">
+          <p>Are you sure you want to CLEAR the CHAT?</p>
+          <button (click)="confirmClearChat()">Yes</button>
+          <button (click)="cancelClear()">No</button>
+        </div>
       </div>
     </div>
   </div>
@@ -61,7 +59,12 @@
       </div>
     </div>
     <div class="clear-button">
-      <button (click)="clear()">Clear Canvas</button>
+      <button class="clear-canvas-btn" (click)="showConfirmationDialog('canvas')">Clear Canvas</button>
+      <div *ngIf="showConfirmation && confirmType === 'canvas'" class="confirmation-dialog">
+        <p>Are you sure you want to CLEAR the CANVAS?</p>
+        <button (click)="confirmClearCanvas()">Yes</button>
+        <button (click)="cancelClear()">No</button>
+      </div>
     </div>
   </div>
 </div>

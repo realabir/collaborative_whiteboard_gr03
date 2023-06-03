@@ -45,6 +45,7 @@ export class AppComponent implements OnInit, OnDestroy{
   onlineUsers: string[] = [];
 
   showConfirmation = false;
+  confirmType: 'chat' | 'canvas' = 'chat';
 
   ngOnInit() {
     this.showConfirmation = false;
@@ -314,7 +315,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   clearChat() {
-    this.showConfirmationDialog();
+    this.showConfirmationDialog('chat');
   }
 
   clearChatMessages() {
@@ -322,7 +323,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   clear() {
-    this.showConfirmationDialog();
+    this.showConfirmationDialog('canvas');
   }
 
   clearCanvas() {
@@ -334,15 +335,21 @@ export class AppComponent implements OnInit, OnDestroy{
     );
   }
 
-  showConfirmationDialog() {
+  showConfirmationDialog(confirmType: 'chat' | 'canvas') {
     this.showConfirmation = true;
+    this.confirmType = confirmType;
   }
 
-  confirmClear() {
+  confirmClearCanvas() {
     this.showConfirmation = false;
-    this.clearChatMessages();
     this.clearCanvas();
     this.socket.emit('clear');
+  }
+
+  confirmClearChat() {
+    this.showConfirmation = false;
+    this.clearChatMessages();
+    this.socket.emit('clear-chat');
   }
 
   cancelClear() {
