@@ -52,8 +52,8 @@ export class AppComponent implements OnInit, OnDestroy{
 
     this.context = this.canvas.nativeElement.getContext('2d')!;
 
-    //this.socket = io('http://localhost:3000/'); //Wenn Lokale Ausführung dann den unteren auskommentieren
-    this.socket = io('https://collaborative-whiteboard-gr03.herokuapp.com/');
+    this.socket = io('http://localhost:3000/'); //Wenn Lokale Ausführung dann den unteren auskommentieren
+    //this.socket = io('https://collaborative-whiteboard-gr03.herokuapp.com/');
 
     this.socket.on('user-id', (userId: string) => {
       console.log(`My user ID is ${userId}`);
@@ -130,24 +130,15 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   erase(x: number, y: number) {
-    const radius = this.eraserSize;
-    const imageData = this.context.getImageData(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-    const data = imageData.data;
-    const width = this.canvas.nativeElement.width;
-    const height = this.canvas.nativeElement.height;
-
-    for (let pixelY = Math.max(0, y - radius); pixelY < Math.min(height, y + radius); pixelY++) {
-      for (let pixelX = Math.max(0, x - radius); pixelX < Math.min(width, x + radius); pixelX++) {
-        const pixelIndex = (pixelY * width + pixelX) * 4;
-        const distance = Math.hypot(pixelX - x, pixelY - y);
-        if (distance <= radius) {
-          data[pixelIndex + 3] = 0;
-        }
-      }
-    }
-
-    this.context.putImageData(imageData, 0, 0);
+    const eraserRadius = this.eraserSize;
+    this.context.beginPath();
+    this.context.arc(x, y, eraserRadius, 0, Math.PI * 2);
+    this.context.fillStyle = '#ffffff';
+    this.context.globalCompositeOperation = 'destination-out';
+    this.context.fill();
+    this.context.globalCompositeOperation = 'source-over';
   }
+
 
   sendMessage() {
     if (this.chatText.trim().length > 0) {
@@ -166,8 +157,9 @@ export class AppComponent implements OnInit, OnDestroy{
     if (!this.drawing) {
       return;
     }
-    const currentX = event.clientX - this.canvas.nativeElement.offsetLeft;
-    const currentY = event.clientY - this.canvas.nativeElement.offsetTop;
+    const rect = this.canvas.nativeElement.getBoundingClientRect();
+    const currentX = event.clientX - rect.left;
+    const currentY = event.clientY - rect.top;
     if (this.tool === Tool.Pen) {
       this.draw(this.lastX, this.lastY, currentX, currentY, this.color, this.lineWidth);
       this.socket.emit('draw', {
@@ -191,9 +183,10 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   onMouseDown(event: MouseEvent) {
+    const rect = this.canvas.nativeElement.getBoundingClientRect();
     this.drawing = true;
-    this.lastX = event.clientX - this.canvas.nativeElement.offsetLeft;
-    this.lastY = event.clientY - this.canvas.nativeElement.offsetTop;
+    this.lastX = event.clientX - rect.left;
+    this.lastY = event.clientY - rect.top;
   }
 
   onMouseUp(event: MouseEvent) {
@@ -206,11 +199,11 @@ export class AppComponent implements OnInit, OnDestroy{
   onDoubleClick(event: MouseEvent) {
     if (!this.textEditing) {
       const rect = this.canvas.nativeElement.getBoundingClientRect();
-      this.textX = event.clientX - rect.left;
-      this.textY = event.clientY - rect.top;
+      this.textX = event.clientX - rect.left + window.scrollX;
+      this.textY = event.clientY - rect.top + window.scrollY;
       this.textInput.style.position = 'absolute';
-      this.textInput.style.left = event.clientX + 'px';
-      this.textInput.style.top = event.clientY + 'px';
+      this.textInput.style.left = event.clientX + window.scrollX + 'px';
+      this.textInput.style.top = event.clientY + window.scrollY + 'px';
       this.textInput.style.fontSize = this.textSize + 'px'
       this.textInput.style.border = 'none';
       this.textInput.style.padding = '0';
@@ -256,10 +249,10 @@ export class AppComponent implements OnInit, OnDestroy{
   onMouseMoveText(event: MouseEvent) {
     if (this.textEditing) {
       const rect = this.canvas.nativeElement.getBoundingClientRect();
-      this.textInput.style.left = event.clientX + 'px';
-      this.textInput.style.top = event.clientY + 'px';
-      this.textX = event.clientX - rect.left;
-      this.textY = event.clientY - rect.top;
+      this.textInput.style.left = event.clientX + window.scrollX + 'px'; // Adjust for scroll
+      this.textInput.style.top = event.clientY + window.scrollY + 'px'; // Adjust for scroll
+      this.textX = event.clientX - rect.left + window.scrollX; // Adjust for scroll
+      this.textY = event.clientY - rect.top + window.scrollY; // Adjust for scroll
     }
   }
 
